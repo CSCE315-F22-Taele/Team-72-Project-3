@@ -10,9 +10,12 @@ Run a .js file
 --------------------
 1. In terminal, run: node <src code>.js
 OR
+
 2a. Go in package.json
+
 2b. In scripts section you can add the following:   
     "<script name>" : "node <src code>.js"
+
 2c. In terminal, run: npm run <script name>
 
 
