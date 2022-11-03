@@ -8,7 +8,6 @@ Install Express in Linux
 
 Run a .js file
 --------------------
-/*
 1. In terminal, run: node <src code>.js
 OR
 2a. Go in package.json
