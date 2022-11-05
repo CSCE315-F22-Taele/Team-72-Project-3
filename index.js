@@ -6,27 +6,6 @@ const port = 3000
 //use view engine
 app.set('view engine', 'ejs')
 
-
-//Runs the server, listens on port 3000 for requests
-app.listen(port, () => {
-    console.log(`Put the following url in a web browser: http://localhost:${port}`);
-});
-
-
-//Setting up ROUTES
-app.get('/order', (req, res) => { 
-    res.render("order") 
-})
-
-app.get('/manager', (req, res) => { 
-    res.render("manager") 
-})
-
-app.get('/server', (req, res) => { 
-    res.render("server") 
-})
-    
-    
 /*--------------------DB CONNECTION--------------------*/
 //Import pg and dotenv packages
 const { Pool } = require('pg')
@@ -50,18 +29,50 @@ process.on('SIGINT', () =>{
 })
 
 
-app.get('/price', (req, res) => {
-    prices = []
-    pool.query("SELECT name,customer_price from item;")
-    .then(query_res => {
-        
-        for (let i = 0; i < query_res.rowCount; i++){
-            prices.push(query_res.rows[i])
-        }
-        const data = {prices: prices}
-        res.render('pricesDepict', data)
-    }).catch((error) => {
-        console.log(error);
-      });
+//Executes a SQL Query
+function execQuery(cmd){
+    return new Promise( (resolve, reject) => {
+        output = []
+        pool.query(cmd)
+        .then(query_res => {
+            for (let i = 0; i < query_res.rowCount; i++){
+                output.push(query_res.rows[i])
+            }
+            resolve(output)
+        }).catch((error) => {
+            reject(error);
+        })
+    })
+    
+}
 
+/*----------------------------------------*/
+
+//Runs the server, listens on port 3000 for requests
+app.listen(port, () => {
+    console.log(`Put the following url in a web browser: http://localhost:${port}`);
+});
+
+
+//Setting up ROUTES
+app.get('/order', (req, res) => { 
+    res.render("order") 
 })
+
+/*app.get('/manager', (req, res) => { 
+    res.render("manager") 
+})*/
+
+app.get('/server', (req, res) => { 
+    res.render("server") 
+})
+
+
+app.get('/price', async (req, res) => {
+    const prices = await execQuery("SELECT name,customer_price from item;")
+    const data = {prices: prices}
+    res.render('manager', data)
+})
+    
+
+
