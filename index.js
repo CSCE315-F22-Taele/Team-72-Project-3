@@ -40,6 +40,7 @@ function execQuery(cmd){
             }
             resolve(output)
         }).catch((error) => {
+            console.log(error)
             reject(error);
         })
     })
@@ -54,14 +55,58 @@ app.listen(port, () => {
 });
 
 
-//Setting up ROUTES
+//https://www.geeksforgeeks.org/how-to-dynamically-add-html-content-when-documents-are-inserted-in-collection-using-node-js/
+//Get a Customer Order
+const bodyParser = require('body-parser')
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: true
+}))
+
+const data = [{price: 0}]
+
+
 app.get('/order', (req, res) => { 
-    res.render("order") 
+    res.render("order", {data: data}) 
 })
 
-/*app.get('/manager', (req, res) => { 
+app.post('/order', async (req, res) => { 
+    let totalPrice = 0
+
+    let count = Object.keys(req.body).length;
+    let keys = Object.keys(req.body)
+
+    for (let i = 0; i < count; i++){
+
+        //edge case for chip names
+
+        let lst = (await execQuery("SELECT customer_price, inventory, customer_amount from item where name = '"+keys[i]+"'"))
+        totalPrice += lst[0].customer_price
+        let inventory = lst[1].inventory
+        let customer_amount = lst[2].customer_amount
+
+        await execQuery("UPDATE item SET inventory = '"+(inventory - customer_amount)+"' WHERE name = '"+keys[i]+"'")
+    }
+
+    /*Object.keys(req.body).forEach(async element =>{
+        console.log(element)
+        totalPrice += (await execQuery("SELECT customer_price from item where name = '"+element+"'"))[0].customer_price
+        console.log(totalPrice)
+    })*/
+
+    //totalPrice += (await execQuery("SELECT customer_price from item where name = '"+element+"'"))[0].customer_price
+
+    data[0] = {price: totalPrice};
+    res.render("order", {data: data}) 
+})
+
+
+//Setting up ROUTES
+app.get('/manager', (req, res) => { 
     res.render("manager") 
-})*/
+})
+
+
 
 app.get('/server', (req, res) => { 
     res.render("server") 
