@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlaceOrder</title>
+</head>
+<body>
+    Create Order
+
+    <form action="/order" method="post">
+        <!-- <script src="C:\Users\Conrad\OneDrive\Desktop\frontend-focus\frontend-focus\index.js"></script> -->
+        <script src="../index.js"></script>
+        <input type="checkbox" id="Steak" name="Steak">Steak<br><br>
+        <input type="checkbox" id="Chicken" name="Chicken">Chicken<br><br>
+        <button type="submit">Submit</button>
+    </form>
+    
+
+    <% data.forEach(element => { %>
+        <h2>Total Price: $<%= element.price%></h2>
+        <% }) %>
+
+</body>
+
+</html>
+
