@@ -61,6 +61,7 @@ app.listen(port, () => {
 //https://www.geeksforgeeks.org/how-to-dynamically-add-html-content-when-documents-are-inserted-in-collection-using-node-js/
 //Get a Customer Order
 const bodyParser = require('body-parser')
+app.use(express.static("./public"));    // imports the static files used for frontend styling
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true

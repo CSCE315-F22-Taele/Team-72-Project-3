@@ -1,0 +1,12 @@
+<% 
+    getPrice = function(checkbox, element){
+    let total = 0;
+    if (checkbox.is(':checked')){
+      total += element.price;
+    } 
+    else{
+      total -= element.price;
+    }
+    }
+    return total;
+%> 
