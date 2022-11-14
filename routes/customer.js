@@ -23,7 +23,7 @@ router.get('/', getItems, (req, res) => {
 });
 
 router.post('/', async (req, res) => { 
-    let totalPrice = 0
+    let totalPrice = 0;
 
     //Date
     let myDate = new Date();
@@ -31,7 +31,7 @@ router.post('/', async (req, res) => {
     
 
     let count = Object.keys(req.body).length;
-    let keys = Object.keys(req.body)
+    let keys = Object.keys(req.body);
 
     //co_id and coi_id for customer order
     let co_id = parseInt((await execQuery("SELECT MAX(id) FROM customer_orders"))[0].max) + 1;
@@ -45,23 +45,23 @@ router.post('/', async (req, res) => {
     await execQuery("INSERT INTO customer_orders(id, price, time_of_order, employee_id) VALUES ("+co_id+", " + totalPrice + ", '" + time_of_order + "', " + employee_id + ")");
 
 
-    let mainTop = ""
-    let mainPrice = ""
-    let proteinID = ""
-    let mainEntreeBase = ""
-    let mainEntreeBaseID = ""
+    let mainTop = "";
+    let mainPrice = "";
+    let proteinID = "";
+    let mainEntreeBase = "";
+    let mainEntreeBaseID = "";
 
     for (let i = 0; i < count; i++){
 
         //edge case for chip names
         //console.log(keys[i])
 
-        let lst = (await execQuery("SELECT id, customer_price, inventory, customer_amount, type from item where name = '"+keys[i]+"'"))
-        totalPrice += lst[0].customer_price
-        let id = lst[0].id
-        let inventory = lst[0].inventory
-        let customer_amount = lst[0].customer_amount
-        let type = lst[0].type
+        let lst = (await execQuery("SELECT id, customer_price, inventory, customer_amount, type from item where name = '"+keys[i]+"'"));
+        totalPrice += lst[0].customer_price;
+        let id = lst[0].id;
+        let inventory = lst[0].inventory;
+        let customer_amount = lst[0].customer_amount;
+        let type = lst[0].type;
 
         // console.log(id)
         // console.log(inventory)
@@ -69,16 +69,16 @@ router.post('/', async (req, res) => {
         // console.log(type)
 
         if (type === "Protein"){
-            mainTop = keys[i]
-            mainPrice = lst[0].customer_price
-            proteinID = id
+            mainTop = keys[i];
+            mainPrice = lst[0].customer_price;
+            proteinID = id;
         }
         else if(type === "Entree Base"){
-            mainEntreeBase = keys[i]
-            mainEntreeBaseID = id
+            mainEntreeBase = keys[i];
+            mainEntreeBaseID = id;
         }
         else if(type === "Drinks" || type === "Sides"){
-            coi_id++
+            coi_id++;
             await execQuery("INSERT INTO customer_order_items(id, name, price) VALUES ("+coi_id+", '" + keys[i] + "', " + lst[0].customer_price+")");
             await execQuery("INSERT INTO co_to_coi(co_id, coi_id) VALUES ("+co_id+", " + coi_id +")");
             await execQuery("INSERT INTO coi_to_i(coi_id, i_id) VALUES ("+coi_id+", " + id +")");
@@ -89,7 +89,7 @@ router.post('/', async (req, res) => {
 
 
         //dec inventory
-        await execQuery("UPDATE item SET inventory = "+(inventory - customer_amount)+" WHERE name = '"+keys[i]+"'")
+        await execQuery("UPDATE item SET inventory = "+(inventory - customer_amount)+" WHERE name = '"+keys[i]+"'");
     }
 
     /*Object.keys(req.body).forEach(async element =>{
@@ -111,7 +111,8 @@ router.post('/', async (req, res) => {
     //console.log("Got here! 3")
     await execQuery("INSERT INTO coi_to_i(coi_id, i_id) VALUES ("+original_coi_id+", " + mainEntreeBaseID +")");
 
-    res.render("customer", {itemsByType: itemsByType}) 
+    //res.render("customer", {itemsByType: itemsByType}) 
+    res.render("customer", {itemsByType: itemsByType, sectionOrder: globals.customerSectionOrder});
 });
 
 module.exports = router;
