@@ -47,9 +47,6 @@ app.get('/price', async (req, res) => {
     res.render('manager', data)
 })
 
-
-
-
 // CONNECT ROUTES
 fs.readdir("./routes", (err, files) => {
     files.forEach(file => {

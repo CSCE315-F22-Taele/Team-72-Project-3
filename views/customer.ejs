@@ -8,13 +8,14 @@
     <link rel="stylesheet" href="/styles/main.css">
     <link rel="stylesheet" href="/styles/customer.css">
     <script src="/scripts/customer.js" defer></script>
+    <script type="module" src="/modules/globals.js"></script>
 </head>
 <body>
     <h1>Create Order :)</h1>
 
     <form action="/customer" method="post">
         <div class="checkbox-form">
-            <% Object.keys(locals.itemsByType).forEach(itemKey => { %>
+            <% locals.sectionOrder.forEach(itemKey => { %>
                 <div class="section">
                     <h2><%= itemKey %></h2>
                     <% locals.itemsByType[itemKey].forEach(item => { %>
@@ -25,81 +26,10 @@
                 </div>
             <% }); %>
         </div>
-        
-        
-        <!-- <div class="checkbox-form">
-            <div class="section">
-                <h2>Entree Base</h2>
-                <input type="checkbox" id="Bowls" name="Bowls">Bowl<br><br>
-                <input type="checkbox" id="Salad Mix" name="Salad Mix">Salad<br><br>
-                <input type="checkbox" id="Burrito Tortilla" name="Burrito Tortilla">Burrito<br><br>
-                <input type="checkbox" id="Taco Shells" name="Taco Shells">Taco<br><br>   
-            </div>
-            <div class="section">
-                <h2>Protein</h2>
-                <input type="checkbox" id="Steak" name="Steak">Steak<br><br>
-                <input type="checkbox" id="Ground Beef" name="Ground Beef">Ground Beef<br><br>
-                <input type="checkbox" id="Chicken" name="Chicken">Chicken<br><br>
-                <input type="checkbox" id="Vegetables" name="Vegetables">Vegetables<br><br>
-            </div>
-            <div class="section">
-                <h2>Sauces</h2>
-                <input type="checkbox" id="Jalapeno Ranch" name="Jalapeno Ranch">Jalapeno Ranch<br><br>
-                <input type="checkbox" id="Pineapple Salsa" name="Pineapple Salsa">Pineapple Salsa<br><br>
-                <input type="checkbox" id="Tomatillo Verde" name="Tomatillo Verde">Tomatillo Verde Sauce<br><br>
-                <input type="checkbox" id="Lime Crema" name="Lime Crema">Lime Crema<br><br>
-                <input type="checkbox" id="Guacamole" name="Guacamole">Guacamole<br><br>
-                <input type="checkbox" id="Ranch" name="Ranch">Ranch<br><br>
-                <input type="checkbox" id="Lime Juice" name="Lime Juice">Lime Juice<br><br>
-                <input type="checkbox" id="Chipotle Caesar" name="Chipotle Caesar">Chipotle Caesar<br><br>
-                <input type="checkbox" id="Citrus Vinaigrette" name="Citrus Vinaigrette">Citrus Vinaigrette<br><br>
-                <input type="checkbox" id="Sour Cream" name="Sour Cream">Sour Cream<br><br>
-            </div>
-            <div class="section">
-                <h2>Rice</h2>
-                <input type="checkbox" id="White Rice" name="White Rice">White Rice<br><br>
-                <input type="checkbox" id="Spanish Rice" name="Spanish Rice">Spanish Rice<br><br>
-            </div>
-            <div class="section">
-                <h2>Beans</h2>
-                <input type="checkbox" id="Black Beans" name="Black Beans">Black Beans<br><br>
-                <input type="checkbox" id="Pinto Beans" name="Pinto Beans">Pinto Beans<br><br>
-            </div>
-            <div class="section">
-                <h2>Cheese</h2>
-                <input type="checkbox" id="Cheddar Cheese" name="Cheddar Cheese">Cheddar Cheese<br><br>
-                <input type="checkbox" id="American Cheese" name="American Cheese">American Cheese<br><br>
-            </div>
-            <div class="section">
-                <h2>Toppings</h2>
-                <input type="checkbox" id="Pico" name="Pico">Pico<br><br>
-                <input type="checkbox" id="Corn" name="Corn">Corn<br><br>
-                <input type="checkbox" id="Lettuce" name="Lettuce">Lettuce<br><br>
-                <input type="checkbox" id="Spinach" name="Spinach">Spinach<br><br>
-                <input type="checkbox" id="Tomatoes" name="Tomatoes">Tomatoes<br><br>
-                <input type="checkbox" id="Onions" name="Onions">Onions<br><br>
-            </div>
-            <div class="section">
-                <h2>Sides</h2>
-                <input type="checkbox" id="Chips and Salsa" name="Chips and Salsa">Chips & Salsa<br><br>
-                <input type="checkbox" id="Chips and Queso" name="Chips and Queso">Chips & Queso<br><br>
-                <input type="checkbox" id="Chips and Guac" name="Chips and Guac">Chips & Guac<br><br>
-            </div>
-            <div class="section">
-                <h2>Drinks</h2>
-                <input type="checkbox" id="16oz Cup" name="16oz Cup">16oz Fountain Drink<br><br>
-                <input type="checkbox" id="32oz Cup" name="32oz Cup">32oz Fountain Drink<br><br>
-                <input type="checkbox" id="Can" name="Can">Canned Drink<br><br>
-            </div>
-        </div> -->
         <button type="submit">Submit</button>
     </form>
 
     <h2>Total Price: $<span id="total-price">0.00</span></h2>
-
-    <% data.forEach(element => { %>
-        <h2>Total Price (Old): $<%= element.price%></h2>
-    <% }) %>
 
 </body>
 

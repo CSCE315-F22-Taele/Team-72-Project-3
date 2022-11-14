@@ -1,12 +1,8 @@
 const express = require("express");
 const { pool, execQuery } = require("../modules/execQuery");
+const globals = require("../modules/globals");
 
 const router = express.Router();
-
-const data = [{price: 0}];
-
-
-
 
 var itemsByType = [];
 
@@ -23,12 +19,8 @@ router.get('/', getItems, (req, res) => {
         return groups;
     }, {});
 
-    res.render("customer", {itemsByType: itemsByType, data: data});
+    res.render("customer", {itemsByType: itemsByType, sectionOrder: globals.customerSectionOrder});
 });
-
-
-
-
 
 router.post('/', async (req, res) => { 
     let totalPrice = 0
@@ -119,9 +111,7 @@ router.post('/', async (req, res) => {
     //console.log("Got here! 3")
     await execQuery("INSERT INTO coi_to_i(coi_id, i_id) VALUES ("+original_coi_id+", " + mainEntreeBaseID +")");
 
-
-    data[0] = {price: totalPrice};
-    res.render("customer", {itemsByType: itemsByType, data: data}) 
+    res.render("customer", {itemsByType: itemsByType}) 
 });
 
 module.exports = router;

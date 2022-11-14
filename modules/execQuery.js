@@ -31,23 +31,3 @@ module.exports = {
         })
     }
 }
-
-// //Executes a SQL Query
-// function execQuery(cmd){
-//     return new Promise( (resolve, reject) => {
-//         output = []
-//         pool.query(cmd)
-//         .then(query_res => {
-//             for (let i = 0; i < query_res.rowCount; i++){
-//                 if (typeof query_res.rows[i] != "undefined") {
-//                     output.push(query_res.rows[i])
-//                 }
-//             }
-//             //console.log(output)
-//             resolve(output)
-//         }).catch((error) => {
-//             console.log(error)
-//             reject(error);
-//         })
-//     })
-// }
