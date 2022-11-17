@@ -13,6 +13,14 @@
 <body>
     <h1>Create Order :)</h1>
 
+    <div id="google_translate_element"></div>
+
+    <script type="text/javascript">
+    function googleTranslateElementInit() {
+    new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+    }
+    </script><script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
     <form action="/customer" method="post">
         <div class="checkbox-form">
             <% locals.sectionOrder.forEach(itemKey => { %>
@@ -27,6 +35,20 @@
             <% }); %>
         </div>
         <button type="submit">Submit</button>
+    </form>
+
+    <form action="<%= action %>" method="post">
+        <% if (fields.length) { %>
+            <% fields.forEach(function(field) { %>
+                <label><%= field.name %></label>
+                <input type="<%= field.type %>" name="<%= field.name %>"
+                    <% if (field.property) { %>
+                        <%= field.property %>
+                    <% } %>
+                >
+            <% }) %>
+        <% } %>
+        <button type="submit">Employee View</button>
     </form>
 
     <h2>Total Price: $<span id="total-price">0.00</span></h2>
