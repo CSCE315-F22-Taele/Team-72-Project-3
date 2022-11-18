@@ -2,7 +2,7 @@
   "name": "frontend-focus",
   "version": "1.0.0",
   "description": "Install Express in Linux\r --------------------\r 1. cd to ur directory\r 2. sudo apt install npm (if you do not have npm)\r 3. npm init\r 4. npm install express --save",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "devStart": "nodemon server.js"
