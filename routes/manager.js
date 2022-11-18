@@ -5,10 +5,17 @@ const globals = require("../modules/globals");
 const router = express.Router();
 
 var info = [];
+var recentRestock = [];
 
+router.use(getRecentRestock);
+async function getRecentRestock(req, res, next){
+    recentRestock = await execQuery("SELECT * FROM restock_orders ORDER BY time_of_order DESC LIMIT 25;");
+    next();
+}
 
+//Intial Manager Page
 router.get('/', (req, res) => { 
-    res.render("manager",  { btndisp: "block", disp: "none", restock_price: 0, restock_amount: 0, inventory: 0, order_unit: 'NULL' });
+    res.render("manager",  {recentRestock: recentRestock, btndisp: "block", disp: "none", restock_price: 0, restock_amount: 0, inventory: 0, order_unit: 'NULL' });
 });
 
 router.post('/', async (req, res) => { 
@@ -18,20 +25,35 @@ router.post('/', async (req, res) => {
         info[0]["disp"] = "block";
         info[0]["btndisp"] = "none";
         itemRestock = info[0]["restock_price"];
+        info[0]["recentRestock"] = recentRestock;
 
         res.render("manager", info[0]);
     }else{
-        res.render("manager",  { btndisp: "block", disp: "none", restock_price: 0, restock_amount: 0, inventory: 0, order_unit: 'NULL', msg: "Please Select a valid Item"});
+        res.render("manager",  {recentRestock: recentRestock, btndisp: "block", disp: "none", restock_price: 0, restock_amount: 0, inventory: 0, order_unit: 'NULL', msg: "Please Select a valid Item"});
     }
 });
 
 
 router.post('/COMPLETE', async (req, res) => { 
     if (req.body["restock-amt"] !== ""){
+        //update inventory
         await execQuery("UPDATE item SET inventory=inventory+" + req.body["restock-amt"] + " where name='" + info[0].name + "'");
-        res.render("manager", {btndisp: "block", disp: "none", msg: "Restock Order Complete!", restock_price: 0, restock_amount: 0, inventory: 0, order_unit: 'NULL' });
+        
+        //get info for restock order
+        let newid = parseInt((await execQuery("SELECT MAX(id) FROM restock_orders"))[0].max) + 1;
+        let myDate = new Date();
+        let timenow = myDate.getFullYear() + '-' +('0' + (myDate.getMonth()+1)).slice(-2)+ '-' +  ('0' + myDate.getDate()).slice(-2) + ' '+myDate.getHours()+ ':'+('0' + (myDate.getMinutes())).slice(-2)+ ':'+myDate.getSeconds();
+        let employee_id = 1;
+
+        //create restock order
+        await execQuery("INSERT INTO restock_orders(id, time_of_order, item_name, amount, price, employee_id, order_unit) VALUES ("+newid+", '" + timenow + "', '" + info[0].name + "', " + req.body["restock-amt"] + ", "+ info[0]["restock_price"]*req.body["restock-amt"] + ", " + employee_id + ", '" +info[0]["order_unit"]+"');");
+
+        recentRestock = await execQuery("SELECT * FROM restock_orders ORDER BY time_of_order DESC LIMIT 25;");
+
+        //Render Page with updated info
+        res.render("manager", {recentRestock:recentRestock, btndisp: "block", disp: "none", msg: "Restock Order Complete!", restock_price: 0, restock_amount: 0, inventory: 0, order_unit: 'NULL' });
     }else{
-        res.render("manager", {btndisp: "block", disp: "none", msg: "Error: Could not complete restock order", restock_price: 0, restock_amount: 0, inventory: 0, order_unit: 'NULL' });
+        res.render("manager", {recentRestock:recentRestock, btndisp: "block", disp: "none", msg: "Error: Could not complete restock order", restock_price: 0, restock_amount: 0, inventory: 0, order_unit: 'NULL' });
     }
     
 });

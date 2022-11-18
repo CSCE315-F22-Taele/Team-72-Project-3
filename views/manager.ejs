@@ -15,6 +15,7 @@
     <h1>Manager Page</h1>
 
      <div class = "restock-order">
+        <h2>Restock Order</h2>
         <div id="restock-itemname">
             <form action="/manager" method="post">
                 
@@ -23,6 +24,7 @@
                 <%= locals.msg %>
                 <button type="submit" id = "iteminfo" style="display: <%= locals.btndisp%>">Confirm</button>
             </form>
+            <br><br>
         </div>
         <div class="restock-amount" style="display: <%= locals.disp%>"> 
             <form action="/manager/COMPLETE" method="post">
@@ -39,8 +41,27 @@
             <form action="/manager" method="get">
                 <button type="submit">Cancel</button>
             </form>
+            <br><br>
         </div> 
     </div> 
+
+    <div>
+        <h2>Order Log</h2>
+        <% locals.recentRestock.forEach(order => { %>
+            Order #<%= order.id%> [<%= order.time_of_order%>]: <b><%= order.amount%> <%= order.order_unit %> of <%=order.item_name %></b> was ordered for <b>($<%= order.price %>)</b> <br>
+        <% }); %>
+    </div>
+
+    <br><br>
+    <div id="google_translate_element"></div>
+    <div>
+        <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+        <script type="text/javascript">
+            function googleTranslateElementInit() {
+              new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+            }
+        </script>
+    </div>
 
     <!-- <script>
         const target = document.getElementById("restock-amount");
