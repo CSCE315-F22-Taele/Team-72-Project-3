@@ -8,10 +8,65 @@
     <title>PlaceOrder</title>
     <link rel="stylesheet" href="/styles/main.css">
     <link rel="stylesheet" href="/styles/manager.css">
+    <script type="text/javascript"> var restock = <%= locals.restock_price %>;</script>
     <script src="/scripts/manager.js" defer></script>
 </head>
 <body>
     <h1>Manager Page</h1>
+
+     <div class = "restock-order">
+        <h2>Restock Order</h2>
+        <div id="restock-itemname">
+            <form action="/manager" method="post">
+                
+                <label for="item-name">Item name:</label>
+                <input type="text" id="item-name" name="item-name"> <br>
+                <%= locals.msg %>
+                <button type="submit" id = "iteminfo" style="display: <%= locals.btndisp%>">Confirm</button>
+            </form>
+            <br><br>
+        </div>
+        <div class="restock-amount" style="display: <%= locals.disp%>"> 
+            <form action="/manager/COMPLETE" method="post">
+                Item: <%= locals.name %> <br>
+                Current inventory: <%= locals.inventory %> <%= locals.order_unit%> <br>
+
+                <label>Restock amount ($<%=locals.restock_price%> per <%= locals.restock_amount %> <%= locals.order_unit %>):</label>
+                <input type="number" min="1" id="restock-amt" name="restock-amt"> <br>
+
+                Price: $<span id="restock-price">0.00</span><br>
+                
+                <button type="submit">Confirm</button>
+            </form>
+            <form action="/manager" method="get">
+                <button type="submit">Cancel</button>
+            </form>
+            <br><br>
+        </div> 
+    </div> 
+
+    <div>
+        <h2>Order Log</h2>
+        <% locals.recentRestock.forEach(order => { %>
+            Order #<%= order.id%> [<%= order.time_of_order%>]: <b><%= order.amount%> <%= order.order_unit %> of <%=order.item_name %></b> was ordered for <b>($<%= order.price %>)</b> <br>
+        <% }); %>
+    </div>
+
+    <br><br>
+    <div id="google_translate_element"></div>
+    <div>
+        <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+        <script type="text/javascript">
+            function googleTranslateElementInit() {
+              new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+            }
+        </script>
+    </div>
+
+
+        
+        
+    </form>
 </body>
 
 </html>

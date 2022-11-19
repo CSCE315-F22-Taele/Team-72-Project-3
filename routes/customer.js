@@ -23,7 +23,7 @@ router.get('/', getItems, (req, res) => {
 });
 
 router.post('/', async (req, res) => { 
-    let totalPrice = 0
+    let totalPrice = 0;
 
     //Date
     let myDate = new Date();
@@ -31,7 +31,7 @@ router.post('/', async (req, res) => {
     
 
     let count = Object.keys(req.body).length;
-    let keys = Object.keys(req.body)
+    let keys = Object.keys(req.body);
 
     //co_id and coi_id for customer order
     let co_id = parseInt((await execQuery("SELECT MAX(id) FROM customer_orders"))[0].max) + 1;
@@ -41,44 +41,77 @@ router.post('/', async (req, res) => {
 
     let employee_id = 1; //NEED TO FIX
 
+    //Error Handling (ensuring all combination of items are valid)
+    let side_drink_choosen = false;
+    let entree_base_choosen = false;
+    let protein_choosen = false;
+    let topping_choosen = false;
+
+    for (let i = 0; i < count; i++){
+        let type = (await execQuery("SELECT type from item where name = '"+keys[i]+"'"))[0].type;
+
+        if (type === "Protein"){
+            protein_choosen = true;
+        }
+        else if(type === "Entree Base"){
+            if (entree_base_choosen){
+                console.log("Error: Cannot have multiple entree bases");
+                res.render("customer", {itemsByType: itemsByType, sectionOrder: globals.customerSectionOrder});
+                return;
+            }
+            entree_base_choosen = true;
+        }
+        else if(type === "Drinks" || type === "Sides"){
+            side_drink_choosen = true;
+        }else{
+            topping_choosen = true;
+        }
+    }
+
+    /*
+    Valid Order Rules:
+        If a topping is selected, both a protein and entree base must be selected.
+        A protein and entree base must be selected unless a side or drink is selected.
+        Only one entree base can be selected.
+
+        === A protein and an entree base must be choosen OR ONLY a side or drink can be choosen
+    */
+    if(!((protein_choosen && entree_base_choosen) || (!topping_choosen && !protein_choosen && !entree_base_choosen && side_drink_choosen))){
+        console.log("Error: Invalid Order");
+        res.render("customer", {itemsByType: itemsByType, sectionOrder: globals.customerSectionOrder});
+        return;
+    }
+
     await execQuery("INSERT INTO customer_order_items(id, name, price) VALUES ("+coi_id +", null, 0)");
     await execQuery("INSERT INTO customer_orders(id, price, time_of_order, employee_id) VALUES ("+co_id+", " + totalPrice + ", '" + time_of_order + "', " + employee_id + ")");
 
 
-    let mainTop = ""
-    let mainPrice = ""
-    let proteinID = ""
-    let mainEntreeBase = ""
-    let mainEntreeBaseID = ""
+    let mainTop = "";
+    let mainPrice = "";
+    let proteinID = "";
+    let mainEntreeBase = "";
+    let mainEntreeBaseID = "";
 
     for (let i = 0; i < count; i++){
 
-        //edge case for chip names
-        //console.log(keys[i])
-
-        let lst = (await execQuery("SELECT id, customer_price, inventory, customer_amount, type from item where name = '"+keys[i]+"'"))
-        totalPrice += lst[0].customer_price
-        let id = lst[0].id
-        let inventory = lst[0].inventory
-        let customer_amount = lst[0].customer_amount
-        let type = lst[0].type
-
-        // console.log(id)
-        // console.log(inventory)
-        // console.log(customer_amount)
-        // console.log(type)
+        let lst = (await execQuery("SELECT id, customer_price, inventory, customer_amount, type from item where name = '"+keys[i]+"'"));
+        totalPrice += lst[0].customer_price;
+        let id = lst[0].id;
+        let inventory = lst[0].inventory;
+        let customer_amount = lst[0].customer_amount;
+        let type = lst[0].type;
 
         if (type === "Protein"){
-            mainTop = keys[i]
-            mainPrice = lst[0].customer_price
-            proteinID = id
+            mainTop = keys[i];
+            mainPrice = lst[0].customer_price;
+            proteinID = id;
         }
         else if(type === "Entree Base"){
-            mainEntreeBase = keys[i]
-            mainEntreeBaseID = id
+            mainEntreeBase = keys[i];
+            mainEntreeBaseID = id;
         }
         else if(type === "Drinks" || type === "Sides"){
-            coi_id++
+            coi_id++;
             await execQuery("INSERT INTO customer_order_items(id, name, price) VALUES ("+coi_id+", '" + keys[i] + "', " + lst[0].customer_price+")");
             await execQuery("INSERT INTO co_to_coi(co_id, coi_id) VALUES ("+co_id+", " + coi_id +")");
             await execQuery("INSERT INTO coi_to_i(coi_id, i_id) VALUES ("+coi_id+", " + id +")");
@@ -87,31 +120,25 @@ router.post('/', async (req, res) => {
             await execQuery("INSERT INTO coi_to_i(coi_id, i_id) VALUES ("+original_coi_id+", " + id +")");
         }
 
-
         //dec inventory
-        await execQuery("UPDATE item SET inventory = "+(inventory - customer_amount)+" WHERE name = '"+keys[i]+"'")
+        await execQuery("UPDATE item SET inventory = "+(inventory - customer_amount)+" WHERE name = '"+keys[i]+"'");
     }
 
-    /*Object.keys(req.body).forEach(async element =>{
-        console.log(element)
-        totalPrice += (await execQuery("SELECT customer_price from item where name = '"+element+"'"))[0].customer_price
-        console.log(totalPrice)
-    })*/
+    if (mainEntreeBase !== "" && mainTop !== "" && mainPrice !== ""){
+        await execQuery("UPDATE customer_order_items SET name = '"+ mainTop + " " + mainEntreeBase + "' WHERE id = '" + original_coi_id+"'");
+        await execQuery("UPDATE customer_order_items SET price = "+ mainPrice + " WHERE id = '" + original_coi_id+"'");
+    }
 
-    //totalPrice += (await execQuery("SELECT customer_price from item where name = '"+element+"'"))[0].customer_price
-
-    await execQuery("UPDATE customer_order_items SET name = '"+ mainTop + " " + mainEntreeBase + "' WHERE id = '" + original_coi_id+"'");
-    await execQuery("UPDATE customer_order_items SET price = "+ mainPrice + " WHERE id = '" + original_coi_id+"'");
     await execQuery("UPDATE customer_orders SET price = "+ totalPrice + " WHERE id = '" + co_id+"'");
 
-    //console.log("Got here!")
     await execQuery("INSERT INTO co_to_coi(co_id, coi_id) VALUES ("+co_id+", " + original_coi_id +")");
-    //console.log("Got here! 2")
-    await execQuery("INSERT INTO coi_to_i(coi_id, i_id) VALUES ("+original_coi_id+", " + proteinID +")");
-    //console.log("Got here! 3")
-    await execQuery("INSERT INTO coi_to_i(coi_id, i_id) VALUES ("+original_coi_id+", " + mainEntreeBaseID +")");
 
-    res.render("customer", {itemsByType: itemsByType}) 
+    if (proteinID !== "" && mainEntreeBaseID !== ""){
+        await execQuery("INSERT INTO coi_to_i(coi_id, i_id) VALUES ("+original_coi_id+", " + proteinID +")");
+        await execQuery("INSERT INTO coi_to_i(coi_id, i_id) VALUES ("+original_coi_id+", " + mainEntreeBaseID +")");
+    }
+    
+    res.render("customer", {itemsByType: itemsByType, sectionOrder: globals.customerSectionOrder});
 });
 
 module.exports = router;
