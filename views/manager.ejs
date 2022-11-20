@@ -19,37 +19,61 @@
         <div id="restock-itemname">
             <form action="/manager" method="post">
                 
-                <label for="item-name">Item name:</label>
-                <input type="text" id="item-name" name="item-name"> <br>
-                <%= locals.msg %>
-                <button type="submit" id = "iteminfo" style="display: <%= locals.btndisp%>">Confirm</button>
-            </form>
-            <br><br>
-        </div>
-        <div class="restock-amount" style="display: <%= locals.disp%>"> 
-            <form action="/manager/COMPLETE" method="post">
-                Item: <%= locals.name %> <br>
-                Current inventory: <%= locals.inventory %> <%= locals.order_unit%> <br>
+                Item name:<!-- <label for="item-name">Item name:</label> -->
+                <input type="text" id="item-name" class="input" name="item-name"> 
+                <br><br>
 
-                <label>Restock amount ($<%=locals.restock_price%> per <%= locals.restock_amount %> <%= locals.order_unit %>):</label>
-                <input type="number" min="1" id="restock-amt" name="restock-amt"> <br>
-
-                Price: $<span id="restock-price">0.00</span><br>
+                <div class="center">
+                    <span class="err"><%= locals.errmsg %></span> <span class="suc"><%= locals.sucmsg %></span> 
+                    <button type="submit" class="button" style="display: <%= locals.btndisp%>">Search</button>
+                </div>
                 
-                <button type="submit">Confirm</button>
             </form>
-            <form action="/manager" method="get">
-                <button type="submit">Cancel</button>
+        </div>
+
+
+        <div id="restock-info" style="display: <%= locals.disp%>"> 
+            <form action="/manager/0" method="post">
+                Current inventory: <%= locals.inventory %> <%= locals.order_unit%> of <%= locals.name %> <br>
+                Restock amount ($<%=locals.restock_price%> per <%= locals.restock_amount %> <%= locals.order_unit %>):
+                <input type="number" min="1" id="restock-amt" name="restock-amt" class="input2"> <br>
+
+                <div class="center">
+                    <h3>Price: $<span id="restock-price">0.00</span><br></h3>
+                    <button type="submit" class="buttongreen">Confirm</button>
+                </div>
             </form>
-            <br><br>
+            <div class="center">
+                <form action="/manager/1" method="post">
+                    <button type="submit" class="buttonred">Cancel</button>
+                </form> 
+            </div>
+
         </div> 
     </div> 
 
-    <div>
+    <div class = "log">
         <h2>Order Log</h2>
-        <% locals.recentRestock.forEach(order => { %>
-            Order #<%= order.id%> [<%= order.time_of_order%>]: <b><%= order.amount%> <%= order.order_unit %> of <%=order.item_name %></b> was ordered for <b>($<%= order.price %>)</b> <br>
-        <% }); %>
+        <table>
+            <tr>
+                <th>Order No.</th>
+                <th>DateTime of Order</th>
+                <th>Item Name</th>
+                <th>Order Amount</th>
+                <th>Cost</th>
+            </tr>
+
+            <% locals.recentRestock.forEach(order => { %>
+                <tr>
+                    <td><%= order.id%></td>
+                    <td><%= order.time_of_order%></td>
+                    <td><%= order.item_name%></td>
+                    <td><%= order.amount%> <%= order.order_unit %></td>
+                    <td>$<%= order.price%> </td>
+                <!-- Order #<%= order.id%> [<%= order.time_of_order%>]: <b><%= order.amount%> <%= order.order_unit %> of <%=order.item_name %></b> was ordered for <b>($<%= order.price %>)</b> <br> -->
+                </tr>
+            <% }); %>
+        </table>
     </div>
 
     <br><br>
