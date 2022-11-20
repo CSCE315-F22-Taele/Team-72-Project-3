@@ -194,3 +194,8 @@ table, th, td {
     font-size: larger;
     font-family: 'Quicksand', sans-serif;
 }
+
+
+#google_translate_element{
+    font-size: larger;
+}
