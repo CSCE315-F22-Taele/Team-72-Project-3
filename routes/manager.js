@@ -50,7 +50,7 @@ router.post('/0', async (req, res) => {
         let employee_id = 1;
 
         //create restock order
-        await execQuery("INSERT INTO restock_orders(id, time_of_order, item_name, amount, price, employee_id, order_unit) VALUES ("+newid+", '" + timenow + "', '" + info[0].name + "', " + req.body["restock-amt"] + ", "+ info[0]["restock_price"]*req.body["restock-amt"] + ", " + employee_id + ", '" +info[0]["order_unit"]+"');");
+        await execQuery("INSERT INTO restock_orders(id, time_of_order, item_name, amount, price, employee_id, order_unit) VALUES ("+newid+", '" + timenow + "', '" + info[0].name + "', " + req.body["restock-amt"]*info[0]["restock_amount"] + ", "+ info[0]["restock_price"]*req.body["restock-amt"] + ", " + employee_id + ", '" +info[0]["order_unit"]+"');");
 
         recentRestock = await execQuery("SELECT * FROM restock_orders ORDER BY time_of_order DESC LIMIT 25;");
 
