@@ -7,21 +7,28 @@
     <title>PlaceOrder</title>
     <link rel="stylesheet" href="/styles/main.css">
     <link rel="stylesheet" href="/styles/customer.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="/scripts/customer.js" defer></script>
     <script type="module" src="/modules/globals.js"></script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </head>
+<header>
+    <div id="page-title">
+        <h1>Cabo Grill</h1>
+    </div>
+    <div id="globe-icon">
+        <div id="google_translate_element"></div>
+        <script type="text/javascript">
+            function googleTranslateElementInit() {
+                new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+            }
+        </script>
+    </div>
+</header>
 <body>
     <h1>Create Order :)</h1>
 
-    <div id="google_translate_element"></div>
-
-    <script type="text/javascript">
-    function googleTranslateElementInit() {
-    new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
-    }
-    </script><script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
-    <form action="/customer" method="post">
+    <!-- <form action="/customer" method="post">
         <div class="checkbox-form">
             <% locals.sectionOrder.forEach(itemKey => { %>
                 <div class="section">
@@ -35,11 +42,48 @@
             <% }); %>
         </div>
         <button type="submit">Submit</button>
-    </form>
+    </form> -->
 
-    <h2>Total Price: $<span id="total-price">0.00</span></h2>
+    <div class="order-window">
+        <div class="buttons-container">    
+            <% Object.keys(locals.categoryGroups).forEach(groupKey => { %>
+                <div class="items-category">
+                    <h2><%= groupKey %></h2>
+                    <div class="button-section">
+                        <% var allItems = [];
+                        categoryGroups[groupKey].forEach(catKey => {
+                            locals.itemsByType[catKey].forEach(item => { %>
+                                <div class="item-button" name="<%= item.name %>" price="<%= item.customer_price %>">
+                                    <p><%= item.name %></p>
+                                </div>
+                            <% })
+                        }); %>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+        <div class="order-log">
+            <table id="item-list">
+                <tr>
+                    <td class="td-name">Item Name diwqd jdkw qjid jqwid qwd hdhuqi duia  diquw d</td>
+                    <td class="td-price">Price</td>
+                </tr>
+                <tr>
+                    <td class="td-name">Item Name</td>
+                    <td class="td-price">Price</td>
+                </tr>
+            </table>
+            <button type="submit">Submit</button>
+            <h2>Total Price: $<span id="total-price">0.00</span></h2>
+        </div>
+    </div>
+
+    
 
 </body>
+<footer>
+
+</footer>
 
 </html>
 

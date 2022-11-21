@@ -3,3 +3,22 @@ html, body {
     margin: 0;
 }
 
+h1, h2, p {
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: green;
+}
+
+#page-title {
+    margin: auto;
+    text-align: center;
+}
+
+#globe-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+}

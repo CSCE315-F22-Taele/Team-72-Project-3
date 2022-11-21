@@ -5,3 +5,60 @@
 .section {
     margin: 0px 20px;
 }
+
+.order-window {
+    display: flex;
+}
+
+.button-section {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.item-button {
+    font-size: 20px;
+    background-color: aquamarine;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 2px;
+    width: 100px;
+    height: 50px;
+    padding: 5px;
+}
+
+.item-button p {
+    text-align: center;
+    user-select: none;
+}
+
+.order-log {
+    background-color: #bbb;
+    width: 400px;
+    flex: 0 0 auto;
+}
+
+.buttons-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.item-list table {
+    width: 100%;
+    table-layout: fixed
+}
+
+.td-name {
+    width: 65%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.td-price {
+    padding-left: 5px;
+}
+
+.items-category {
+    margin: 5px
+}

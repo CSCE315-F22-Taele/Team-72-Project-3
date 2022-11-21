@@ -19,7 +19,7 @@ router.get('/', getItems, (req, res) => {
         return groups;
     }, {});
 
-    res.render("customer", {itemsByType: itemsByType, sectionOrder: globals.customerSectionOrder});
+    res.render("customer", {itemsByType: itemsByType, sectionOrder: globals.customerSectionOrder, categoryGroups: globals.categoryGroups});
 });
 
 router.post('/', async (req, res) => { 
