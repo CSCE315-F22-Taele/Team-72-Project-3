@@ -92,6 +92,8 @@ router.post('/', async (req, res) => {
     let mainEntreeBase = "";
     let mainEntreeBaseID = "";
 
+    let chipsInfo = await execQuery("SELECT customer_amount, inventory FROM item where name='Tortilla Chips';");
+
     for (let i = 0; i < count; i++){
 
         let lst = (await execQuery("SELECT id, customer_price, inventory, customer_amount, type from item where name = '"+keys[i]+"'"));
@@ -121,6 +123,33 @@ router.post('/', async (req, res) => {
         }
 
         //dec inventory
+
+        //prevents negative inventory
+        if (inventory - customer_amount <= 0){
+            inventory = 0;
+            customer_amount = 0;
+        }
+
+        //Chips and ... edge case
+        if (keys[i].includes("Chips and")){
+
+            let side = keys[i].substring(10);
+            if (side === "Guac"){
+                side = "Guacamole";
+            }
+            if (side === "Salsa"){
+                side = "Pineapple Salsa";
+            }
+
+            let chipAmt = ((chipsInfo[0].inventory - chipsInfo[0].customer_amount) > 0) ? (chipsInfo[0].inventory - chipsInfo[0].customer_amount) : 0;
+            await execQuery("UPDATE item SET inventory = "+(chipAmt)+" WHERE name = 'Tortilla Chips'");
+            
+            let sauceInfo = await execQuery("SELECT customer_amount, inventory FROM item where name='"+ side +"';");
+
+            let sauceAmt = ((sauceInfo[0].inventory - sauceInfo[0].customer_amount) > 0) ? (sauceInfo[0].inventory - sauceInfo[0].customer_amount) : 0;
+            await execQuery("UPDATE item SET inventory = "+(sauceAmt)+" WHERE name = '"+ side +"';");
+
+        }
         await execQuery("UPDATE item SET inventory = "+(inventory - customer_amount)+" WHERE name = '"+keys[i]+"'");
     }
 
