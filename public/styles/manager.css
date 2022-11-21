@@ -132,17 +132,17 @@ h3{
 }
 
 .button:hover{
-    background-color: rgba(74, 74, 74, 0.91);
+    background-color: rgba(29, 29, 29, 0.4);
     color: rgb(255, 255, 255);
 }
 
 
 .buttongreen:hover{
-    background-color: rgba(74, 74, 74, 0.91);
+    background-color: rgba(21, 143, 0, 0.45);
     color: rgb(255, 255, 255);
 }
 .buttonred:hover{
-    background-color: rgba(74, 74, 74, 0.91);
+    background-color: rgba(143, 0, 0, 0.45);
     color: rgb(255, 255, 255);
 }
 
