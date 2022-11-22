@@ -13,6 +13,7 @@
 <body>
     <h1>Current In Progress Orders</h1>
     <div class = "inProgressLog">
+        <% var empty = true; %>
         <table>
             <thead>
                 <th> ID </th>
@@ -21,13 +22,22 @@
             </thead>
 
             <% locals.inprogressOrders.forEach(order => { %>
+                <% empty = false; %>
                 <tr>
                     <td><%= order.id%></td>
                     <td><%= order.price%></td>
                     <td><%= order.ingredients%></td>
+                    <%#<td><form action="/employee/clear" method="post">
+                        <button type="submit">Clear</button>
+                      </form></td>%>
                 </tr>
             <% }); %>
         </table>
+        <% if(!empty){ %>
+            <form action="/employee/clearall" method="post">
+                <button type="submit">Clear All</button>
+            </form>
+        <% } %>
     </div>
 </body>
 </html>

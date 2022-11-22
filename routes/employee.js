@@ -16,7 +16,22 @@ router.get('/', getInprogressOrders, (req, res) => {
     res.render("employee", {inprogressOrders: inprogressOrders});
 });
 
-router.post('/', async (req, res) => { 
+/*router.post('/init', async (req, res) => { 
+    await execQuery("DELETE FROM customer_orders_inprogress");
+    res.render("employee");
+});*/
+
+router.post('/', getInprogressOrders, (req, res) => { 
+    res.render("employee", {inprogressOrders: inprogressOrders});
+});
+
+/*router.post("/clear", async (req, res) =>{
+    await execQuery("DELETE FROM customer_orders_inprogress WHERE id='" +  +"'");
+    res.render("employee", {inprogressOrders: inprogressOrders});
+});*/
+
+router.post("/clearall", async (req, res) =>{
+    await execQuery("DELETE FROM customer_orders_inprogress");
     res.render("employee", {inprogressOrders: inprogressOrders});
 });
 
