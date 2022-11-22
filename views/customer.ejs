@@ -12,37 +12,12 @@
     <script type="module" src="/modules/globals.js"></script>
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </head>
-<header>
-    <div id="page-title">
-        <h1>Cabo Grill</h1>
-    </div>
-    <div id="globe-icon">
-        <div id="google_translate_element"></div>
-        <script type="text/javascript">
-            function googleTranslateElementInit() {
-                new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
-            }
-        </script>
-    </div>
-</header>
 <body>
-    <h1>Create Order :)</h1>
-
-    <!-- <form action="/customer" method="post">
-        <div class="checkbox-form">
-            <% locals.sectionOrder.forEach(itemKey => { %>
-                <div class="section">
-                    <h2><%= itemKey %></h2>
-                    <% locals.itemsByType[itemKey].forEach(item => { %>
-                        <input type="checkbox" id="<%= item.name %>" item-id="<%= item.id %>" name="<%= item.name %>" price="<%= item.customer_price %>">
-                            <%= item.name %>
-                        <br><br>
-                    <% }); %>
-                </div>
-            <% }); %>
+    <header>
+        <div id="page-title" class="topbar">
+            <h1>Customer Page</h1>
         </div>
-        <button type="submit">Submit</button>
-    </form> -->
+    </header>
 
     <div class="order-window">
         <div class="buttons-container">    
@@ -53,7 +28,7 @@
                         <% var allItems = [];
                         categoryGroups[groupKey].forEach(catKey => {
                             locals.itemsByType[catKey].forEach(item => { %>
-                                <div class="item-button" name="<%= item.name %>" price="<%= item.customer_price %>">
+                                <div class="item-button" name="<%= item.name %>" price="<%= item.customer_price %>" item-id="<%= item.id %>">
                                     <p><%= item.name %></p>
                                 </div>
                             <% })
@@ -63,23 +38,34 @@
             <% }); %>
         </div>
         <div class="order-log">
-            <table id="item-list">
-                <tr>
-                    <td class="td-name">Item Name</td>
-                    <td class="td-price">Price</td>
-                </tr>
-            </table>
-            <button type="submit">Submit</button>
-            <h2>Total Price: $<span id="total-price">0.00</span></h2>
+            <div id="item-list-container">
+                <table id="item-list">
+    
+                </table>
+            </div>
+            <div id="order-report">
+                <div>
+                    <h2>Total: $<span id="total-price">0.00</span></h2>
+                </div>
+                <div class="report-button" id="submit-button">
+                    <h2>Submit</h2>
+                </div>
+                <div class="report-button" id="cancel-button">
+                    <h2>Cancel</h2>
+                </div>
+            </div>
         </div>
     </div>
 
     
-
+    <div class="topbar">
+        <div id="google_translate_element"></div>
+        <script type="text/javascript">
+            function googleTranslateElementInit() {
+                new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+            }
+        </script>
+    </div>
 </body>
-<footer>
-
-</footer>
-
 </html>
 

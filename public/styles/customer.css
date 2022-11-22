@@ -1,7 +1,3 @@
-.checkbox-form {
-    display: flex;
-}
-
 .section {
     margin: 0px 20px;
 }
@@ -17,7 +13,9 @@
 
 .item-button {
     font-size: 20px;
-    background-color: aquamarine;
+    background-color: rgba(63, 63, 63, 0.91);
+    border: 1px solid black;
+    border-radius: 8px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -33,9 +31,15 @@
 }
 
 .order-log {
-    background-color: #bbb;
+    background-color: rgba(80, 80, 80, 0.91);
+    border: 1px solid black;
+    margin: 30px;
+    padding: 20px;
+    border-radius: 12px;
     width: 400px;
     flex: 0 0 auto;
+    position: relative;
+    /* height: 100%; */
 }
 
 .buttons-container {
@@ -43,9 +47,9 @@
     flex-wrap: wrap;
 }
 
-.item-list table {
+#item-list {
     width: 100%;
-    table-layout: fixed
+    table-layout: fixed;
 }
 
 .td-name {
@@ -62,3 +66,39 @@
 .items-category {
     margin: 5px
 }
+
+.item-button:hover {
+    background-color: rgba(80, 80, 80, 0.91);
+    cursor: pointer;
+}
+
+#order-report {
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 15px;
+    /* width: auto; */
+    /* justify-content: center; */
+    align-items: center;
+    
+}
+
+#submit-button {
+    background-color: lightgreen;
+}
+
+#cancel-button {
+    background-color: firebrick;
+}
+
+.report-button {
+    padding: 5px;
+    border-radius: 5px;
+    margin-left: 15px;
+    user-select: none;
+}
+
+.report-button:hover {
+    cursor: pointer;
+}
+

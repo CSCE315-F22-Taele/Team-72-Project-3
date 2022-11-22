@@ -10,7 +10,7 @@ h1{
 }
 
 
-.topbar{
+/* .topbar{
     list-style: none;
     font-weight: bold;
     margin-bottom: 10px;
@@ -19,7 +19,7 @@ h1{
     background-color: #000000d7;
     top: 0;
     padding: 0.5%;
-}
+} */
 
 h2{
     font-family: 'Quicksand', sans-serif;
@@ -30,9 +30,9 @@ h2{
 }
 
 
-body{
+/* body{
     background-color: rgb(102, 49, 49);
-}
+} */
 
 
 .restock-order{
@@ -49,7 +49,7 @@ body{
     padding-bottom: -5%;
     margin: 1%;
     font-size: larger;
-    font-family: 'Quicksand', sans-serif;
+    /* font-family: 'Quicksand', sans-serif; */
 }
 
 .err{

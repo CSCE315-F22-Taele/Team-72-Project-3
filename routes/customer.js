@@ -23,12 +23,18 @@ router.get('/', getItems, (req, res) => {
 });
 
 router.post('/', async (req, res) => { 
+    console.log(req.body.orderItems);
+
+    
+    res.send();
+    return;
+    
+    //Date
+    
     let totalPrice = 0;
 
-    //Date
     let myDate = new Date();
     let time_of_order = myDate.getFullYear() + '-' +('0' + (myDate.getMonth()+1)).slice(-2)+ '-' +  ('0' + myDate.getDate()).slice(-2) + ' '+myDate.getHours()+ ':'+('0' + (myDate.getMinutes())).slice(-2)+ ':'+myDate.getSeconds();
-    
 
     let count = Object.keys(req.body).length;
     let keys = Object.keys(req.body);
