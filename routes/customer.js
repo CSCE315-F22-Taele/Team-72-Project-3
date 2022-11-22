@@ -100,9 +100,14 @@ router.post('/', async (req, res) => {
     let mainEntreeBase = "";
     let mainEntreeBaseID = "";
 
+    let everything = ""
+
     let chipsInfo = await execQuery("SELECT customer_amount, inventory FROM item where name='Tortilla Chips';");
 
     for (let i = 0; i < count; i++){
+
+        
+
 
         let lst = (await execQuery("SELECT name, customer_price, inventory, customer_amount, type from item where id = '"+keys[i]+"'"));
         totalPrice += lst[0].customer_price;
@@ -111,6 +116,10 @@ router.post('/', async (req, res) => {
         let inventory = lst[0].inventory;
         let customer_amount = lst[0].customer_amount;
         let type = lst[0].type;
+
+
+        everything += (name + ", ");
+
 
         if (type === "Protein"){
             mainTop = name;
@@ -175,6 +184,9 @@ router.post('/', async (req, res) => {
         await execQuery("INSERT INTO coi_to_i(coi_id, i_id) VALUES ("+original_coi_id+", " + proteinID +")");
         await execQuery("INSERT INTO coi_to_i(coi_id, i_id) VALUES ("+original_coi_id+", " + mainEntreeBaseID +")");
     }
+
+
+    await execQuery("INSERT INTO customer_orders_inprogress(id, price, ingredients) VALUES ("+original_coi_id+ ", " + totalPrice + ", '" + everything.substring(0, everything.length-2) +"');")
 
     console.log("Order Complete!")
     
