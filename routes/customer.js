@@ -5,6 +5,7 @@ const globals = require("../modules/globals");
 const router = express.Router();
 
 var itemsByType = [];
+let orderReset = 0; //deletes oldest order once 5 entries are in customer_orders_inprogress
 
 const getItems = async (req, res, next) => {
     req.body.items = await execQuery("SELECT * FROM item");
@@ -92,7 +93,6 @@ router.post('/', async (req, res) => {
 
     await execQuery("INSERT INTO customer_order_items(id, name, price) VALUES ("+coi_id +", null, 0)");
     await execQuery("INSERT INTO customer_orders(id, price, time_of_order, employee_id) VALUES ("+co_id+", " + totalPrice + ", '" + time_of_order + "', " + employee_id + ")");
-
 
     let mainTop = "";
     let mainPrice = "";

@@ -11,7 +11,23 @@
     <script src="/scripts/employee.js" defer></script>
 </head>
 <body>
-    <h1>Employee Page</h1>
-</body>
+    <h1>Current In Progress Orders</h1>
+    <div class = "inProgressLog">
+        <table>
+            <thead>
+                <th> ID </th>
+                <th> Price </th>
+                <th> Ingredients </th>
+            </thead>
 
+            <% locals.inprogressOrders.forEach(order => { %>
+                <tr>
+                    <td><%= order.id%></td>
+                    <td><%= order.price%></td>
+                    <td><%= order.ingredients%></td>
+                </tr>
+            <% }); %>
+        </table>
+    </div>
+</body>
 </html>
