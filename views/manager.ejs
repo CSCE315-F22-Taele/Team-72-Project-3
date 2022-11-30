@@ -23,7 +23,7 @@
     </div>
 
      <div class = "restock-order">
-        <h2>Restock Order</h2>
+        <h2>Restock Order</h2><br>
         <div id="restock-itemname">
             <form action="/manager" method="post">
                 
@@ -61,7 +61,7 @@
     </div> 
 
     <div class = "log">
-        <h2>Order Log</h2>
+        <h2>Order Log</h2><br>
         <table>
             <tr>
                 <th>Order No.</th>
@@ -86,18 +86,129 @@
 
     <div class = "reports">
         <h2>Restock Report</h2>
-            To do...
+        <br>
+        <span class="suc"><%=locals.restockmsg%></span>
+        <form action="/manager/restock" method="post">
+            
+
+            <button type="submit" class="buttongreen">Generate Report</button>
+        </form> 
+        <form action="/manager/restock-clear" method="post">
+            <button type="submit" class="button">Clear</button>
+        </form> 
+
+        <table>
+            <tr>
+                <th>Item Name</th>
+                <th>Current Inventory</th>
+                <th>Minimum Inventory</th>
+            </tr>
+            <% locals.restock.forEach(item => { %>
+                <tr>
+                    <td><%= item.name%></td>
+                    <td><%= item.inventory%> <%= item.order_unit %> </td>
+                    <td><%= item.min_amount%> <%= item.order_unit %></td>
+                </tr>
+            <% }); %>
+        </table>
+        
+
+            
     </div>
 
     <div class = "reports">
         <h2>Sales Report</h2>
-            To do...
+        <br>
+
+        <form action="/manager/sale" method="post">
+
+            Start DateTime (YYYY-MM-DD HH:MM:SS):<input type="text" id="start-date" class="input" name="start-date"> <br>
+            End DateTime (YYYY-MM-DD HH:MM:SS):<input type="text" id="end-date" class="input" name="end-date"> <br>
+            <span class="suc"><%=locals.salemsg%></span><span class="err"><%=locals.errmsgsale%></span> <br>
+
+            <button type="submit" class="buttongreen">Generate Report</button>
+        </form> 
+        <form action="/manager/sale-clear" method="post">
+            <button type="submit" class="button">Clear</button>
+        </form> 
+
+        <table>
+            <tr>
+                <th>Item Name</th>
+                <th>Customer Order ID</th>
+                <th>Customer Order DateTime</th>
+                <th>Customer Order Price</th>
+                <th>Employee ID</th>
+            </tr>
+            <% locals.sale.forEach(co => { %>
+                <tr>
+                    <td><%= co.name%></td>
+                    <td><%= co.id%></td>
+                    <td><%= co.time_of_order%></td>
+                    <td>$<%= co.price%></td>
+                    <td><%= co.employee_id%></td>
+                </tr>
+            <% }); %>
+        </table>
+
     </div>
 
     <div class = "reports">
-        <h2>Excess Report</h2>
-            To do...
+        <h2>Excess Report</h2><br>
+            
+        
+        <form action="/manager/excess" method="post">
+
+            Start DateTime (YYYY-MM-DD HH:MM:SS):<input type="text" id="start-date" class="input" name="start-date"> <br>
+            <span class="suc"><%=locals.excessmsg%></span><span class="err"><%=locals.errmsgexcess%></span><br>
+            <button type="submit" class="buttongreen">Generate Report</button>
+        </form> 
+        <form action="/manager/excess-clear" method="post">
+            <button type="submit" class="button">Clear</button>
+        </form> 
+
+        <table>
+            <tr>
+                <th>Item Name</th>
+                <th>Past Inventory</th>
+                <th>Current Inventory</th>
+                <th>Percentage Sold in Timeframe</th>
+            </tr>
+            <% locals.excess.forEach(invent => { %>
+                <tr>
+                    <td><%= invent.name%></td>
+                    <td><%= invent.prev_inventory%></td>
+                    <td><%= invent.curr_inventory%></td>
+                    <td><%= invent.percent%>%</td>
+                </tr>
+            <% }); %>
+        </table>
     </div>
+
+
+    <div class = "reports">
+        <h2>Add Item</h2>
+        <br>
+
+        <form action="/manager/addItem" method="post">
+
+            Item Name:<input type="text" id="name" class="input" name="name"> <br>
+            Item Type: <input type="text" id="type" class="input" name="type"> <br>
+            Customer Price ($): <input type="number" min="0" step="0.01" id="customer-price" name="customer-price" class="input2"> <br>
+            Restock Price($): <input type="number" min="0.01" step="0.01" id="restock-price" name="restock-price" class="input2"><br>
+            Order Unit: <input type="text" id="order-unit" class="input" name="order-unit"> <br>
+            Customer Amount: <input type="number" min="0.01" step="0.01" id="customer-amount" name="customer-amount" class="input2"><br>
+            Restock Amount: <input type="number" min="0.01" step="0.01" id="restock-amount" name="restock-amount" class="input2"><br>
+            Minimum Amount: <input type="number" min="0.01" step="0.01" id="min-amount" name="min-amount" class="input2"><br>
+            <span class="err"><%=locals.errmsgadd%></span><span class="suc"><%=locals.addmsg%></span><br>
+            <button type="submit" class="buttongreen">Add to Menu</button>
+        </form> 
+        
+
+    </div>
+
+
+
 
     <br><br>
 

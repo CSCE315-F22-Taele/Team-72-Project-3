@@ -65,7 +65,7 @@ h3{
 }
 
 .input{
-    width:75%;
+    width:50%;
     height: 20%;
     background-color: rgb(63, 63, 63);
     border: 3px solid rgba(37, 37, 37, 0.91);
@@ -175,11 +175,26 @@ h3{
 
 table, th, td {
     border: 1px solid #000;
+    padding: 0.5%;
 }
 
 
 .reports{
     display: inline-block;
+    width: 45%;
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+    background-color: rgba(63, 63, 63, 0.91);
+    transition: 0.3s;
+    border: 1px solid black;
+    border-radius: 12px;
+    padding: 1%;
+    padding-top: -5%;
+    padding-bottom: -5%;
+    margin: 1%;
+    font-size: larger;
+    vertical-align: top;
+    /*display: inline-block;
     width: 95%;
     text-decoration: none;
     color: rgb(255, 255, 255);
@@ -192,7 +207,7 @@ table, th, td {
     padding-bottom: -5%;
     margin: 1%;
     font-size: larger;
-    font-family: 'Quicksand', sans-serif;
+    font-family: 'Quicksand', sans-serif;*/
 }
 
 
