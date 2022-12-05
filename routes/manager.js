@@ -47,7 +47,7 @@ router.post('/', async (req, res) => {
 router.post('/0', async (req, res) => { 
     if (req.body["restock-amt"] !== ""){
         //update inventory
-        await execQuery("UPDATE item SET inventory=inventory+" + req.body["restock-amt"] + " where name='" + info[0].name + "'");
+        await execQuery("UPDATE item SET inventory=inventory+" + req.body["restock-amt"]*info[0].restock_amount + " where name='" + info[0].name + "'");
         
         //get info for restock order
         let newid = parseInt((await execQuery("SELECT MAX(id) FROM restock_orders"))[0].max) + 1;
@@ -79,7 +79,7 @@ router.post('/restock', async (req, res) => {
             restock.push(items[i]);
         }
     }
-    console.log(restock);
+    //console.log(restock);
     res.render("manager", {excess:excess, sale:sale, restock:restock, recentRestock:recentRestock, restockmsg: "Report Generated", btndisp: "block", disp:'none'});
 
 });

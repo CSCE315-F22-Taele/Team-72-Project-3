@@ -6,6 +6,7 @@ h1{
     font-size: 400%;
     margin-bottom: 1%;
     margin-top: 1%;
+    width:70%;
     color: white;
 }
 
@@ -105,6 +106,27 @@ h3{
     margin: 1%;
 }
 
+.buttonnav {
+    background-color:rgb(29, 29, 29,0);
+    border: none !important;
+    color: white;
+    font-size: xx-large;
+    transition-duration: 0.4s;
+    margin: auto;
+    width: 100%;
+    /*border-radius: 10px;*/
+    font-family: 'Quicksand', sans-serif;
+    margin: 1%;
+    text-decoration: bold;
+    transition-duration: 0.4s;
+}
+
+.buttonnav:hover {
+    opacity: 50%;
+    cursor: pointer;
+}
+
+
 .buttongreen {
     background-color:rgb(21, 143, 0);
     border: 2px solid rgba(29, 29, 29, 0.91);
@@ -134,16 +156,19 @@ h3{
 .button:hover{
     background-color: rgba(29, 29, 29, 0.4);
     color: rgb(255, 255, 255);
+    cursor: pointer;
 }
 
 
 .buttongreen:hover{
     background-color: rgba(21, 143, 0, 0.45);
     color: rgb(255, 255, 255);
+    cursor: pointer;
 }
 .buttonred:hover{
     background-color: rgba(143, 0, 0, 0.45);
     color: rgb(255, 255, 255);
+    cursor: pointer;
 }
 
 
@@ -247,6 +272,8 @@ table, th, td {
 }
 
 
+
+
 #start-date{
     width:40%;
 }
@@ -281,4 +308,17 @@ table, th, td {
 
 #min-amount{
     width: 44%;
+}
+
+.left{
+    float: left;
+    margin-left: 1%;
+    margin-right: 1%;
+    margin-top: 2%;
+}
+.right{
+    float:right;
+    margin-left: 1%;
+    margin-right: 1%;
+    margin-top: -3.5%;
 }
