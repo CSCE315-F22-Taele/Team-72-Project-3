@@ -37,7 +37,7 @@ h2{
 
 .restock-order{
     display: inline-block;
-    width: 40%;
+    width: 35%;
     text-decoration: none;
     color: rgb(255, 255, 255);
     background-color: rgba(63, 63, 63, 0.91);
@@ -99,7 +99,7 @@ h3{
     font-size: larger;
     transition-duration: 0.4s;
     margin: auto;
-    width: 20%;
+    width: 30%;
     border-radius: 10px;
     font-family: 'Quicksand', sans-serif;
     margin: 1%;
@@ -112,7 +112,7 @@ h3{
     font-size: larger;
     transition-duration: 0.4s;
     margin: auto;
-    width: 20%;
+    width: 30%;
     border-radius: 10px;
     font-family: 'Quicksand', sans-serif;
     margin: 1%;
@@ -125,7 +125,7 @@ h3{
     font-size: larger;
     transition-duration: 0.4s;
     margin: auto;
-    width: 20%;
+    width: 25%;
     border-radius: 10px;
     font-family: 'Quicksand', sans-serif;
     margin: 1%;
@@ -150,7 +150,7 @@ h3{
 
 
 .log{
-    width: 50%;
+    width: 55%;
     display: inline-block;
     vertical-align:top;
     text-decoration: none;
@@ -181,7 +181,38 @@ table, th, td {
 
 .reports{
     display: inline-block;
-    width: 45%;
+    width: 35%;
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+    background-color: rgba(63, 63, 63, 0.91);
+    transition: 0.3s;
+    border: 1px solid black;
+    border-radius: 12px;
+    padding: 1%;
+    padding-top: -5%;
+    padding-bottom: -5%;
+    margin: 1%;
+    font-size: larger;
+    vertical-align: top;
+    /*display: inline-block;
+    width: 95%;
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+    background-color: rgba(63, 63, 63, 0.91);
+    transition: 0.3s;
+    border: 1px solid black;
+    border-radius: 12px;
+    padding: 1%;
+    padding-top: -5%;
+    padding-bottom: -5%;
+    margin: 1%;
+    font-size: larger;
+    font-family: 'Quicksand', sans-serif;*/
+}
+
+.reports2{
+    display: inline-block;
+    width: 55%;
     text-decoration: none;
     color: rgb(255, 255, 255);
     background-color: rgba(63, 63, 63, 0.91);
@@ -213,4 +244,41 @@ table, th, td {
 
 #google_translate_element{
     font-size: larger;
+}
+
+
+#start-date{
+    width:40%;
+}
+
+#end-date{
+    width:41%;
+}
+
+#type{
+    width:50.5%;
+}
+
+#customer-price{
+    width:43%;
+}
+
+#restock-price{
+    width:45%;
+}
+
+#order-unit{
+    width:50.2%;
+}
+
+#customer-amount{
+    width: 43.5%;
+}
+
+#restock-amount{
+    width: 45%;
+}
+
+#min-amount{
+    width: 44%;
 }
