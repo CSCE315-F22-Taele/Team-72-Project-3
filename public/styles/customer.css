@@ -102,3 +102,17 @@
     cursor: pointer;
 }
 
+.remove-button-column {
+    width: 5%;
+}
+
+.remove-button {
+    background-color: firebrick;
+    width: 20px;
+    text-align: center;
+    border-radius: 3px;
+}
+
+.remove-button:hover {
+    cursor: pointer;
+}
