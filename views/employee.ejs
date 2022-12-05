@@ -11,7 +11,20 @@
     <script src="/scripts/employee.js" defer></script>
 </head>
 <body>
-    <h1>Current In Progress Orders</h1>
+    <div id="page-title" class="topbar">
+        <h1>
+            <p1>Employee Page</p1>
+            <div class="google_translate">
+                <div id="google_translate_element"></div>
+            </div>   
+            <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+            <script type="text/javascript">
+                function googleTranslateElementInit() {
+                    new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+                }
+            </script>
+        </h1>
+    </div>
     <div class = "inProgressLog">
         <% var empty = true; %>
         <table>
@@ -39,15 +52,5 @@
             </form>
         <% } %>
     </div>
-
-    <div class="topbar">
-        <div id="google_translate_element"></div>
-    </div>   
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
-        }
-    </script>
 </body>
 </html>

@@ -27,11 +27,13 @@ router.post('/', getInprogressOrders, (req, res) => {
 
 /*router.post("/clear", async (req, res) =>{
     await execQuery("DELETE FROM customer_orders_inprogress WHERE id='" +  +"'");
+    inprogressOrders = await execQuery("SELECT * FROM customer_orders_inprogress ORDER BY id DESC;");
     res.render("employee", {inprogressOrders: inprogressOrders});
 });*/
 
 router.post("/clearall", async (req, res) =>{
     await execQuery("DELETE FROM customer_orders_inprogress");
+    inprogressOrders = await execQuery("SELECT * FROM customer_orders_inprogress ORDER BY id DESC;");
     res.render("employee", {inprogressOrders: inprogressOrders});
 });
 
