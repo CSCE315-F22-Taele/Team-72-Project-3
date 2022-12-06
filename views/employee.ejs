@@ -36,31 +36,33 @@
         }
     </script>
         
-
-    <div class = "inProgressLog">
+    <br><br>
+    <div class = "center">
         <% var empty = true; %>
-        <table>
-            <thead>
+        <table class = "inProgressLog">
+            <tr>
                 <th> ID </th>
-                <th> Price </th>
+                <!-- <th> Price </th> -->
                 <th> Ingredients </th>
-            </thead>
+                <th> Finished </th>
+            </tr>
 
             <% locals.inprogressOrders.forEach(order => { %>
                 <% empty = false; %>
                 <tr>
                     <td><%= order.id%></td>
-                    <td><%= order.price%></td>
+                    <!-- <td><%= order.price%></td> -->
                     <td><%= order.ingredients%></td>
-                    <%#<td><form action="/employee/clear" method="post">
-                        <button type="submit">Clear</button>
-                      </form></td>%>
+                    <td><form action="/employee/clear/<%= order.id%>" method="post">
+                        <button type="submit" class="button">Clear</button>
+                      </form></td>
                 </tr>
             <% }); %>
         </table>
+        <br>
         <% if(!empty){ %>
             <form action="/employee/clearall" method="post">
-                <button type="submit">Clear All</button>
+                <button type="submit" class="buttonAll">Clear All</button>
             </form>
         <% } %>
     </div>
