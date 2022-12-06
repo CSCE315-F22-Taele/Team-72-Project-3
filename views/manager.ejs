@@ -8,19 +8,19 @@
     <title>PlaceOrder</title>
     <link rel="stylesheet" href="/styles/main.css">
     <link rel="stylesheet" href="/styles/manager.css">
-    <script type="text/javascript"> var restock = <%= locals.restock_price %>;</script>
+    <script type="text/javascript"> var restockp = <%= locals.restock_price %>;</script>
     <script src="/scripts/manager.js" defer></script>
 </head>
 <body>
     <div class = "topbar">
       
         <div class="left">
-            <form action="/employee" method="get">
+            <form action="/employee/" method="get">
                 <button type="submit" class="buttonnav">Employee Page</button>
             </form> 
         </div>
         <div class="left">
-            <form action="/customer" method="get">
+            <form action="/customer/" method="get">
                 <button type="submit" class="buttonnav">Customer Page</button>
             </form> 
         </div>

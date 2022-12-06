@@ -11,20 +11,32 @@
     <script src="/scripts/employee.js" defer></script>
 </head>
 <body>
-    <div id="page-title" class="topbar">
-        <h1>
-            <p1>Employee Page</p1>
-            <div class="google_translate">
-                <div id="google_translate_element"></div>
-            </div>   
-            <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-            <script type="text/javascript">
-                function googleTranslateElementInit() {
-                    new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
-                }
-            </script>
-        </h1>
-    </div>
+    <div class = "topbar" id="page-title">
+      
+        <div class="left">
+            <form action="/manager/" method="get">
+                <button type="submit" class="buttonnav">Manager Page</button>
+            </form> 
+        </div>
+        <div class="left">
+            <form action="/customer/" method="get">
+                <button type="submit" class="buttonnav">Customer Page</button>
+            </form> 
+        </div>
+        <h1>Employee Page</h1>
+        <div class="right">
+            <div id="google_translate_element"></div>
+        </div>
+
+    </div>    
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+        }
+    </script>
+        
+
     <div class = "inProgressLog">
         <% var empty = true; %>
         <table>
