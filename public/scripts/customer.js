@@ -1,7 +1,10 @@
 var orderItems = [];
 var itemCount = 0;
 
-// clears the customer order log panel
+
+/**
+ * Clears the customer order log panel
+ */
 function clearLog() {
     orderItems = []
     $("#confirm-message").text("");
@@ -10,7 +13,10 @@ function clearLog() {
     $("#total-price").text("0.00");
 }
 
-// event listener for item buttons
+
+/**
+ * Event listener for item buttons
+ */
 $(".item-button:not(.out-of-stock)").on("click", function() {
     // get data about item that has been clicked
     var itemName = $(this).attr("name");

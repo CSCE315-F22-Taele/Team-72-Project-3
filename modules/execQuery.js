@@ -11,7 +11,11 @@ const _pool = new Pool({
 module.exports = {
     pool: _pool,
 
-    //Executes a SQL Query
+    /**
+     * Executes a SQL Query
+     * @param {string} cmd 
+     * @returns Promise of either the resulting array of JSON objects from the query or an error
+     */
     execQuery: (cmd) => {
         return new Promise( (resolve, reject) => {
             output = []
