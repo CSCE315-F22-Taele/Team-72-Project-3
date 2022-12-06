@@ -1,3 +1,4 @@
+const { localsName } = require("ejs");
 const express = require("express");
 const { pool, execQuery } = require("../modules/execQuery");
 const globals = require("../modules/globals");
@@ -20,7 +21,11 @@ router.get('/', getItems, (req, res) => {
         return groups;
     }, {});
 
-    res.render("customer", {itemsByType: itemsByType, sectionOrder: globals.customerSectionOrder, categoryGroups: globals.categoryGroups});
+    res.render("customer", {itemsByType: itemsByType, 
+                            sectionOrder: globals.customerSectionOrder, 
+                            categoryGroups: globals.categoryGroups,
+                            testString: "test1"
+                        });
 });
 
 router.post('/', async (req, res) => { 
@@ -35,7 +40,8 @@ router.post('/', async (req, res) => {
 
     if (!req.body.orderItems){
         console.log("Error: Please make a selection");
-        res.render("customer", {itemsByType: itemsByType, sectionOrder: globals.customerSectionOrder, categoryGroups: globals.categoryGroups});
+        res.json({errMsg: "Error: Order is empty."});
+        // res.render("customer", {itemsByType: itemsByType, sectionOrder: globals.customerSectionOrder, categoryGroups: globals.categoryGroups});
         return;
     }
 
@@ -65,7 +71,8 @@ router.post('/', async (req, res) => {
         else if(type === "Entree Base"){
             if (entree_base_choosen){
                 console.log("Error: Cannot have multiple entree bases");
-                res.render("customer", {itemsByType: itemsByType, sectionOrder: globals.customerSectionOrder, categoryGroups: globals.categoryGroups});
+                res.json({errMsg: "Error: Entree cannot have multiple bases."});
+                // res.render("customer", {itemsByType: itemsByType, sectionOrder: globals.customerSectionOrder, categoryGroups: globals.categoryGroups});
                 return;
             }
             entree_base_choosen = true;
@@ -87,7 +94,12 @@ router.post('/', async (req, res) => {
     */
     if(!((protein_choosen && entree_base_choosen) || (!topping_choosen && !protein_choosen && !entree_base_choosen && side_drink_choosen))){
         console.log("Error: Invalid Order");
-        res.render("customer", {itemsByType: itemsByType, sectionOrder: globals.customerSectionOrder, categoryGroups: globals.categoryGroups});
+        res.json({errMsg: "Error: Toppings must be accompanied by at least one entree base and one protein."});
+        // res.render("customer", {itemsByType: itemsByType, 
+        //                         sectionOrder: globals.customerSectionOrder, 
+        //                         categoryGroups: globals.categoryGroups,
+        //                         testString: "test2"
+        //                     });
         return;
     }
 
@@ -190,7 +202,9 @@ router.post('/', async (req, res) => {
 
     console.log("Order Complete!")
     
-    res.render("customer", {itemsByType: itemsByType, sectionOrder: globals.customerSectionOrder, categoryGroups: globals.categoryGroups});
+    // res.render("customer", {itemsByType: itemsByType, sectionOrder: globals.customerSectionOrder, categoryGroups: globals.categoryGroups});
+
+    res.json({errMsg: ""});
 });
 
 module.exports = router;

@@ -123,3 +123,15 @@ body {
 .remove-button:hover {
     cursor: pointer;
 }
+
+#error-message {
+    color: red;
+    font-weight: 700;
+    font-size: 24px;
+}
+
+#confirm-message {
+    color: #00ff00;
+    font-weight: 700;
+    font-size: 24px;
+}

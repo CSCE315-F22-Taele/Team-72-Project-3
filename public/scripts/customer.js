@@ -3,6 +3,8 @@ var itemCount = 0;
 
 function clearLog() {
     orderItems = []
+    $("#confirm-message").text("");
+    $("#error-message").text("");
     $('#item-list').html("");
     $("#total-price").text("0.00");
 }
@@ -25,7 +27,7 @@ $(".item-button:not(.out-of-stock)").on("click", function() {
 
     var lastEntry = $('#item-list tr:last');
     if (lastEntry.length == 0) {
-        $("#item-list").css("color", "white");
+        clearLog();
         $('#item-list').html(htmlRow);
     }
     else {
@@ -39,7 +41,6 @@ $(".item-button:not(.out-of-stock)").on("click", function() {
 
     var itemId = $(this).attr("item-id");
     orderItems.push(itemId);
-    console.log(orderItems);
 
     // event listener for button
     $(`#button-${itemCount}`).on("click", function () {
@@ -52,7 +53,6 @@ $(".item-button:not(.out-of-stock)").on("click", function() {
 
         var index = orderItems.indexOf(itemId);
         orderItems.splice(index, 1);
-        console.log(orderItems);
 
         tableRow.remove();
         itemCount--;
@@ -64,16 +64,23 @@ $(".item-button:not(.out-of-stock)").on("click", function() {
 $("#submit-button").on("click", function() {
     // TODO: add error handling for blank orders
     if (orderItems.length == 0) {
-        var text = $("#item-list").text("Error: You have not added any items to your order.");
-        text.css("color", "red");
+        $("#error-message").text("Error: You have not added any items to your order.");
+        // var text = $("#item-list").text("Error: You have not added any items to your order.");
+        // text.css("color", "red");
         return;
     }
 
-    $.post("/customer", {orderItems: orderItems}).then(() => {
+    $.post("/customer", {orderItems: orderItems}).then((data) => {
         clearLog();
-        console.log("done!");
+
+        console.log(data);
+        if (data.errMsg != "") {
+            $("#error-message").text(data.errMsg);
+        }
+        else {
+            $("#confirm-message").text("Order Complete!");
+        }
     });
-    console.log("submit");
 });
 
 $("#cancel-button").on("click", function() {
