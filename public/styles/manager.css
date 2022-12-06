@@ -179,10 +179,13 @@ h3{
 
 }
 
+table{
+    width: 95%;
+    margin: auto;
+}
 
-table, th, td {
-    border: 1px solid #000;
-    padding: 0.5%;
+th, td {
+    border: 2px solid #000;
 }
 
 
