@@ -1,12 +1,25 @@
+/**
+ * Customer Page routes
+ * @author Carson Duffy
+ */
+
 const { localsName } = require("ejs");
 const express = require("express");
 const { pool, execQuery } = require("../modules/execQuery");
 const globals = require("../modules/globals");
 
+
+
 const router = express.Router();
 
 var itemsByType = [];
 
+/**
+ * Gets every item's information from the database
+ * @param {*} req request object
+ * @param {*} res response object
+ * @param {*} next function to execute next middleware
+ */
 const getItems = async (req, res, next) => {
     req.body.items = await execQuery("SELECT * FROM item");
     next();
