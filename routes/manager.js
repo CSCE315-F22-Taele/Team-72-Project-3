@@ -1,3 +1,9 @@
+/**
+ * Manager Page routes
+ * @author Conrad Krueger
+ */
+
+
 const express = require("express");
 const { pool, execQuery } = require("../modules/execQuery");
 const globals = require("../modules/globals");
@@ -11,19 +17,40 @@ var sale = [];
 var excess = [];
 
 router.use(getRecentRestock);
+
+/**
+ * Middleware which populates recentRestock array with top 25 most recent Restock Orders
+ * @param {*} req request object
+ * @param {*} res response object
+ * @param {*} next function to execute next middleware
+ */
 async function getRecentRestock(req, res, next){
     recentRestock = await execQuery("SELECT * FROM restock_orders ORDER BY time_of_order DESC LIMIT 25;");
     next();
 }
 
-//Intial Manager Page
+/**
+ * Initial Display of the manager page (get/post request from user)
+ * @param {*} req request object
+ * @param {*} res response object
+ */
 router.get('/', (req, res) => { 
     res.render("manager",  {excess:excess, sale:sale, restock:restock, recentRestock: recentRestock, btndisp: "block", disp: "none", restock_price: 0, restock_amount: 0, inventory: 0, order_unit: 'NULL' });
 });
+
+/**
+ * Post request. Still displays default layout
+ */
 router.post('/1', (req, res) => { 
     res.render("manager",  {excess:excess, sale:sale, restock:restock, recentRestock: recentRestock, btndisp: "block", disp: "none", restock_price: 0, restock_amount: 0, inventory: 0, order_unit: 'NULL' });
 });
 
+
+/**
+ * Initial Display of the manager page (get/post request from user)
+ * @param {*} req request object, contains item's name
+ * @param {*} res response object
+ */
 router.post('/', async (req, res) => { 
     info = await execQuery("SELECT name, restock_price, restock_amount, order_unit, inventory from item WHERE name ='"+req.body["item-name"]+"';");
     
@@ -43,7 +70,11 @@ router.post('/', async (req, res) => {
     }
 });
 
-
+/**
+ * Updates Item's inventory and Order log
+ * @param {*} req request object, contains item's restock amount
+ * @param {*} res response object
+ */
 router.post('/0', async (req, res) => { 
     if (req.body["restock-amt"] !== ""){
         //update inventory
@@ -68,7 +99,11 @@ router.post('/0', async (req, res) => {
 });
 
 
-//Restock Report
+/**
+ * Generates a restock report on the manager page
+ * @param {*} req request object
+ * @param {*} res response object
+ */
 router.post('/restock', async (req, res) => { 
     let items = await execQuery("SELECT name, inventory, min_amount, order_unit FROM item"); 
 
@@ -79,19 +114,26 @@ router.post('/restock', async (req, res) => {
             restock.push(items[i]);
         }
     }
-    //console.log(restock);
     res.render("manager", {excess:excess, sale:sale, restock:restock, recentRestock:recentRestock, restockmsg: "Report Generated", btndisp: "block", disp:'none'});
 
 });
 
+/**
+ * Clears restock report display on the manager page
+ * @param {*} req request object
+ * @param {*} res response object
+ */
 router.post('/restock-clear', async (req, res) => { 
     restock = [];
     res.render("manager", {excess:excess, sale:sale, restock:restock, recentRestock:recentRestock, restockmsg:"Cleared", btndisp: "block", disp:'none'});
 });
 
 
-
-//Sales Report
+/**
+ * Generates a sales report on the manager page
+ * @param {*} req request object
+ * @param {*} res response object
+ */
 router.post('/sale', async (req, res) => { 
     ids = await execQuery("select id, name from item;");
 
@@ -121,6 +163,12 @@ router.post('/sale', async (req, res) => {
 
 });
 
+
+/**
+ * Clears sales report display on the manager page
+ * @param {*} req request object
+ * @param {*} res response object
+ */
 router.post('/sale-clear', async (req, res) => { 
     sale = [];
     res.render("manager", {excess:excess, sale:sale, restock:restock, errmsgsale:"", salemsg:"Cleared", recentRestock:recentRestock, btndisp: "block", disp:'none'});
@@ -129,7 +177,11 @@ router.post('/sale-clear', async (req, res) => {
 
 
 
-//Excess Report
+/**
+ * Generates an excess report on the manager page
+ * @param {*} req request object
+ * @param {*} res response object
+ */
 router.post('/excess', async (req, res) => { 
     item_info = await execQuery("select id, name, inventory, customer_amount from item;");
 
@@ -165,12 +217,23 @@ router.post('/excess', async (req, res) => {
 
 });
 
+
+/**
+ * Clears excess report display on the manager page
+ * @param {*} req request object
+ * @param {*} res response object
+ */
 router.post('/excess-clear', async (req, res) => { 
     excess = [];
     res.render("manager", {excess:excess, sale:sale,restock:restock, errmsgexcess:"", excessmsg:"Cleared", recentRestock:recentRestock, btndisp: "block", disp:'none'});
 });
 
 
+/**
+ * Adds a unique custom Item to the database
+ * @param {*} req request object
+ * @param {*} res response object
+ */
 router.post('/addItem', async (req, res) => { 
         // console.log((await execQuery("SELECT COUNT(id) FROM item"))[0]);
         let co_id = parseInt((await execQuery("SELECT COUNT(id) FROM item"))[0].count) + 1;
@@ -198,7 +261,6 @@ router.post('/addItem', async (req, res) => {
 
         res.render("manager", {excess:excess, sale:sale,restock:restock, errmsgexcess:"", addmsg:"Item added successfully", recentRestock:recentRestock, btndisp: "block", disp:'none'});
 });
-
 
 
 module.exports = router;
