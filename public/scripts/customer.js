@@ -7,7 +7,7 @@ function clearLog() {
     $("#total-price").text("0.00");
 }
 
-$(".item-button").on("click", function() {
+$(".item-button:not(.out-of-stock)").on("click", function() {
     var itemName = $(this).attr("name");
     var itemPrice = "$" + $(this).attr("price");
 

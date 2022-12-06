@@ -29,6 +29,11 @@
             <div class="right">
                 <div id="google_translate_element"></div>
             </div>
+            <script type="text/javascript">
+                function googleTranslateElementInit() {
+                    new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+                }
+            </script>
         </div>
     </header>
 
@@ -40,8 +45,12 @@
                     <div class="button-section">
                         <% var allItems = [];
                         categoryGroups[groupKey].forEach(catKey => {
-                            locals.itemsByType[catKey].forEach(item => { %>
-                                <div class="item-button" name="<%= item.name %>" price="<%= item.customer_price %>" item-id="<%= item.id %>">
+                            locals.itemsByType[catKey].forEach(item => { 
+                                var className = "item-button";
+                                if (item.inventory == 0) {
+                                    className += " out-of-stock"
+                                } %>
+                                <div class="<%= className %>" name="<%= item.name %>" price="<%= item.customer_price %>" item-id="<%= item.id %>">
                                     <p><%= item.name %></p>
                                 </div>
                             <% })
@@ -81,14 +90,7 @@
         src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDAbMr5I5wc6nMW45SCKPAuOyuDcOrzc8c
             &q=Cabo+Grill,College+Station+TX">
     </iframe>
-    <div class="topbar">
-        <div id="google_translate_element"></div>
-        <script type="text/javascript">
-            function googleTranslateElementInit() {
-                new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
-            }
-        </script>
-    </div>
+
 </body>
 </html>
 
