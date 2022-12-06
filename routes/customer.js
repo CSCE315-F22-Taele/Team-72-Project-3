@@ -6,14 +6,15 @@ const globals = require("../modules/globals");
 const router = express.Router();
 
 var itemsByType = [];
-let orderReset = 0; //deletes oldest order once 5 entries are in customer_orders_inprogress
 
 const getItems = async (req, res, next) => {
     req.body.items = await execQuery("SELECT * FROM item");
     next();
 }
 
+// get request for customer page
 router.get('/', getItems, (req, res) => { 
+    // group items by their respective categories
     itemsByType = req.body.items.reduce((groups, item) => {
         const group = (groups[item.type] || []);
         group.push(item);
@@ -21,18 +22,14 @@ router.get('/', getItems, (req, res) => {
         return groups;
     }, {});
 
+    // render html for customer order page
     res.render("customer", {itemsByType: itemsByType, 
                             sectionOrder: globals.customerSectionOrder, 
                             categoryGroups: globals.categoryGroups,
-                            testString: "test1"
                         });
 });
 
 router.post('/', async (req, res) => { 
-    //console.log(req.body.orderItems);
-
-    //Date
-    
     let totalPrice = 0;
 
     let myDate = new Date();
@@ -40,8 +37,7 @@ router.post('/', async (req, res) => {
 
     if (!req.body.orderItems){
         console.log("Error: Please make a selection");
-        res.json({errMsg: "Error: Order is empty."});
-        // res.render("customer", {itemsByType: itemsByType, sectionOrder: globals.customerSectionOrder, categoryGroups: globals.categoryGroups});
+        res.json({errMsg: "Error: You have not added any items to your order."});
         return;
     }
 
@@ -72,7 +68,6 @@ router.post('/', async (req, res) => {
             if (entree_base_choosen){
                 console.log("Error: Cannot have multiple entree bases");
                 res.json({errMsg: "Error: Entree cannot have multiple bases."});
-                // res.render("customer", {itemsByType: itemsByType, sectionOrder: globals.customerSectionOrder, categoryGroups: globals.categoryGroups});
                 return;
             }
             entree_base_choosen = true;
@@ -95,11 +90,6 @@ router.post('/', async (req, res) => {
     if(!((protein_choosen && entree_base_choosen) || (!topping_choosen && !protein_choosen && !entree_base_choosen && side_drink_choosen))){
         console.log("Error: Invalid Order");
         res.json({errMsg: "Error: Toppings must be accompanied by at least one entree base and one protein."});
-        // res.render("customer", {itemsByType: itemsByType, 
-        //                         sectionOrder: globals.customerSectionOrder, 
-        //                         categoryGroups: globals.categoryGroups,
-        //                         testString: "test2"
-        //                     });
         return;
     }
 
@@ -117,10 +107,7 @@ router.post('/', async (req, res) => {
     let chipsInfo = await execQuery("SELECT customer_amount, inventory FROM item where name='Tortilla Chips';");
 
     for (let i = 0; i < count; i++){
-
         
-
-
         let lst = (await execQuery("SELECT name, customer_price, inventory, customer_amount, type from item where id = '"+keys[i]+"'"));
         totalPrice += lst[0].customer_price;
         let id = keys[i];
@@ -204,7 +191,7 @@ router.post('/', async (req, res) => {
     
     // res.render("customer", {itemsByType: itemsByType, sectionOrder: globals.customerSectionOrder, categoryGroups: globals.categoryGroups});
 
-    res.json({errMsg: ""});
+    res.json({errMsg: "", orderId: co_id % 1000});
 });
 
 module.exports = router;
