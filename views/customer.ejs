@@ -39,6 +39,7 @@
 
     <div class="order-window">
         <div class="buttons-container">    
+            <!-- The following EJS script will generate categories for the types of items and populate those categories with the respective item buttons -->
             <% Object.keys(locals.categoryGroups).forEach(groupKey => { %>
                 <div class="items-category">
                     <h2><%= groupKey %></h2>
@@ -59,13 +60,12 @@
                 </div>
             <% }); %>
         </div>
+
         <div class="order-log">
             <div id="item-list-container">
                 <div id="error-message"></div>
                 <div id="confirm-message"></div>
-                <table id="item-list">
-                    
-                </table>
+                <table id="item-list"></table>
             </div>
             <div id="order-report">
                 <div>
@@ -81,17 +81,19 @@
         </div>
     </div>
 
-    <iframe
-        id="google_map"
-        width="400"
-        height="300"
-        style="border:0"
-        loading="lazy"
-        allowfullscreen
-        referrerpolicy="no-referrer-when-downgrade"
-        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDAbMr5I5wc6nMW45SCKPAuOyuDcOrzc8c
-            &q=Cabo+Grill,College+Station+TX">
-    </iframe>
+    <div id="map">
+        <iframe
+            id="google_map"
+            width="800"
+            height="300"
+            style="border:0"
+            loading="lazy"
+            allowfullscreen
+            referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDAbMr5I5wc6nMW45SCKPAuOyuDcOrzc8c
+                &q=Cabo+Grill,College+Station+TX">
+        </iframe>
+    </div>
 
 </body>
 </html>

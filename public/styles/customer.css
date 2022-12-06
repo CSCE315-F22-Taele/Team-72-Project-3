@@ -48,7 +48,6 @@ body {
     width: 400px;
     flex: 0 0 auto;
     position: relative;
-    /* height: 100%; */
 }
 
 .buttons-container {
@@ -134,4 +133,12 @@ body {
     color: #00ff00;
     font-weight: 700;
     font-size: 24px;
+}
+
+#map {
+    margin: auto;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
 }

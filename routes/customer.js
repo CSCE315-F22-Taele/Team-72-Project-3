@@ -107,7 +107,7 @@ router.post('/', async (req, res) => {
     let chipsInfo = await execQuery("SELECT customer_amount, inventory FROM item where name='Tortilla Chips';");
 
     for (let i = 0; i < count; i++){
-        
+
         let lst = (await execQuery("SELECT name, customer_price, inventory, customer_amount, type from item where id = '"+keys[i]+"'"));
         totalPrice += lst[0].customer_price;
         let id = keys[i];
@@ -188,10 +188,8 @@ router.post('/', async (req, res) => {
     await execQuery("INSERT INTO customer_orders_inprogress(id, price, ingredients) VALUES ("+original_coi_id+ ", " + totalPrice.toFixed(2) + ", '" + everything.substring(0, everything.length-2) +"');")
 
     console.log("Order Complete!")
-    
-    // res.render("customer", {itemsByType: itemsByType, sectionOrder: globals.customerSectionOrder, categoryGroups: globals.categoryGroups});
 
-    res.json({errMsg: "", orderId: co_id % 1000});
+    res.json({errMsg: "", orderId: co_id % 1000});  // order is referred to by the last three digits
 });
 
 module.exports = router;

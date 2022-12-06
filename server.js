@@ -2,7 +2,6 @@
 const express = require('express')
 const app = express()
 const port = 3000;
-
 const fs = require('fs');
 
 //use view engine
@@ -31,8 +30,6 @@ app.listen(port, () => {
     console.log(`Put the following url in a web browser: http://localhost:${port}/customer`);
 });
 
-
-//https://www.geeksforgeeks.org/how-to-dynamically-add-html-content-when-documents-are-inserted-in-collection-using-node-js/
 //Get a Customer Order
 const bodyParser = require('body-parser')
 app.use(express.static("./public"));    // imports the static files used for frontend styling
@@ -47,7 +44,7 @@ app.get('/price', async (req, res) => {
     res.render('manager', data)
 })
 
-// CONNECT ROUTES
+// connect routes from route files
 fs.readdir("./routes", (err, files) => {
     files.forEach(file => {
         var routeName = file.split(".")[0];

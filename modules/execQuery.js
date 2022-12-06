@@ -22,7 +22,6 @@ module.exports = {
                         output.push(query_res.rows[i])
                     }
                 }
-                //console.log(output)
                 resolve(output)
             }).catch((error) => {
                 console.log(error)
