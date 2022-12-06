@@ -9,7 +9,6 @@ const { pool, execQuery } = require("../modules/execQuery");
 const globals = require("../modules/globals");
 
 
-
 const router = express.Router();
 
 var itemsByType = [];
