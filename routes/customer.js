@@ -197,7 +197,7 @@ router.post('/', async (req, res) => {
     }
 
 
-    await execQuery("INSERT INTO customer_orders_inprogress(id, price, ingredients) VALUES ("+original_coi_id+ ", " + totalPrice.toFixed(2) + ", '" + everything.substring(0, everything.length-2) +"');")
+    await execQuery("INSERT INTO customer_orders_inprogress(id, price, ingredients) VALUES ("+(co_id % 1000)+ ", " + totalPrice.toFixed(2) + ", '" + everything.substring(0, everything.length-2) +"');")
 
     console.log("Order Complete!")
 

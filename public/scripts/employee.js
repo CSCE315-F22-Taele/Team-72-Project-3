@@ -5,7 +5,7 @@
 
 /**
  * Saves the login credentials
- * @param {Object} googleUser 
+ * @param {Object} googleUser user that signed in
  */
 function onSignIn(googleUser) {
     var profile = googleUser.getBasicProfile();
