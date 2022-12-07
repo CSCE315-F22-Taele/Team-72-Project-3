@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PlaceOrder</title>
+    <title>Manager Page</title>
     <link rel="stylesheet" href="/styles/main.css">
     <link rel="stylesheet" href="/styles/manager.css">
     <script type="text/javascript"> var restockp = <%= locals.restock_price %>;</script>
@@ -52,7 +52,7 @@
         <div id="restock-itemname">
             <form action="/manager" method="post">
                 
-                Item name:<!-- <label for="item-name">Item name:</label> -->
+                Item name:
                 <input type="text" id="item-name" class="input" name="item-name"> 
                 <br><br>
 
@@ -103,7 +103,6 @@
                     <td><%= order.item_name%></td>
                     <td><%= order.amount%> <%= order.order_unit %></td>
                     <td>$<%= order.price%> </td>
-                <!-- Order #<%= order.id%> [<%= order.time_of_order%>]: <b><%= order.amount%> <%= order.order_unit %> of <%=order.item_name %></b> was ordered for <b>($<%= order.price %>)</b> <br> -->
                 </tr>
             <% }); %>
         </table>

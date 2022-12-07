@@ -55,7 +55,6 @@ router.post('/', async (req, res) => {
     let time_of_order = myDate.getFullYear() + '-' +('0' + (myDate.getMonth()+1)).slice(-2)+ '-' +  ('0' + myDate.getDate()).slice(-2) + ' '+myDate.getHours()+ ':'+('0' + (myDate.getMinutes())).slice(-2)+ ':'+myDate.getSeconds();
 
     if (!req.body.orderItems){
-        console.log("Error: Please make a selection");
         res.json({errMsg: "Error: You have not added any items to your order."});
         return;
     }
@@ -69,7 +68,7 @@ router.post('/', async (req, res) => {
     const original_coi_id = coi_id;
 
 
-    let employee_id = 1; //NEED TO FIX
+    let employee_id = 1; 
 
     //Error Handling (ensuring all combination of items are valid)
     let side_drink_choosen = false;
@@ -85,7 +84,6 @@ router.post('/', async (req, res) => {
         }
         else if(type === "Entree Base"){
             if (entree_base_choosen){
-                console.log("Error: Cannot have multiple entree bases");
                 res.json({errMsg: "Error: Entree cannot have multiple bases."});
                 return;
             }
@@ -107,7 +105,7 @@ router.post('/', async (req, res) => {
         === A protein and an entree base must be choosen OR ONLY a side or drink can be choosen
     */
     if(!((protein_choosen && entree_base_choosen) || (!topping_choosen && !protein_choosen && !entree_base_choosen && side_drink_choosen))){
-        console.log("Error: Invalid Order");
+
         res.json({errMsg: "Error: Toppings must be accompanied by at least one entree base and one protein."});
         return;
     }
@@ -206,7 +204,7 @@ router.post('/', async (req, res) => {
 
     await execQuery("INSERT INTO customer_orders_inprogress(id, price, ingredients) VALUES ("+(co_id % 1000)+ ", " + totalPrice.toFixed(2) + ", '" + everything.substring(0, everything.length-2) +"');")
 
-    console.log("Order Complete!")
+
 
     res.json({errMsg: "", orderId: co_id % 1000});  // order is referred to by the last three digits
 });

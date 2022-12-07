@@ -235,7 +235,6 @@ router.post('/excess-clear', async (req, res) => {
  * @param {Object} res response object
  */
 router.post('/addItem', async (req, res) => { 
-        // console.log((await execQuery("SELECT COUNT(id) FROM item"))[0]);
         let co_id = parseInt((await execQuery("SELECT COUNT(id) FROM item"))[0].count) + 1;
 
         let order_unit = req.body["order-unit"];

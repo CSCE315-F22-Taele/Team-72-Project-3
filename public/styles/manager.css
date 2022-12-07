@@ -1,26 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Quicksand&display=swap');
 
-/* h1{
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    text-align: center;
-    font-size: 400%;
-    margin-bottom: 1%;
-    margin-top: 1%;
-    width:70%;
-    color: white;
-} */
-
-
-/* .topbar{
-    list-style: none;
-    font-weight: bold;
-    margin-bottom: 10px;
-    width: 100%;
-    text-align: center;
-    background-color: #000000d7;
-    top: 0;
-    padding: 0.5%;
-} */
 
 h2{
     font-family: 'Quicksand', sans-serif;
@@ -29,12 +8,6 @@ h2{
 .center{
     text-align: center;
 }
-
-
-/* body{
-    background-color: rgb(102, 49, 49);
-} */
-
 
 .restock-order{
     display: inline-block;
@@ -50,7 +23,6 @@ h2{
     padding-bottom: -5%;
     margin: 1%;
     font-size: larger;
-    /* font-family: 'Quicksand', sans-serif; */
 }
 
 .err{
@@ -207,20 +179,6 @@ th, td {
     margin: 1%;
     font-size: larger;
     vertical-align: top;
-    /*display: inline-block;
-    width: 95%;
-    text-decoration: none;
-    color: rgb(255, 255, 255);
-    background-color: rgba(63, 63, 63, 0.91);
-    transition: 0.3s;
-    border: 1px solid black;
-    border-radius: 12px;
-    padding: 1%;
-    padding-top: -5%;
-    padding-bottom: -5%;
-    margin: 1%;
-    font-size: larger;
-    font-family: 'Quicksand', sans-serif;*/
 }
 
 .reports2{
@@ -238,20 +196,6 @@ th, td {
     margin: 1%;
     font-size: larger;
     vertical-align: top;
-    /*display: inline-block;
-    width: 95%;
-    text-decoration: none;
-    color: rgb(255, 255, 255);
-    background-color: rgba(63, 63, 63, 0.91);
-    transition: 0.3s;
-    border: 1px solid black;
-    border-radius: 12px;
-    padding: 1%;
-    padding-top: -5%;
-    padding-bottom: -5%;
-    margin: 1%;
-    font-size: larger;
-    font-family: 'Quicksand', sans-serif;*/
 }
 
 

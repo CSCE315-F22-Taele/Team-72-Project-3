@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PlaceOrder</title>
+    <title>Employee Page</title>
     <link rel="stylesheet" href="/styles/main.css">
     <link rel="stylesheet" href="/styles/employee.css">
     <script src="/scripts/employee.js" defer></script>
@@ -27,27 +27,7 @@
         <div class="right">
             <div id="google_translate_element"></div>
         </div>
-        <div class="right">
-            <a class = "buttonnav" href="/auth">Login</a>
-        </div>
-
-        <!-- 
-        <div>
-            <script src="https://accounts.google.com/gsi/client" async defer></script>
-            <div id="g_id_onload"
-                data-client_id="648080113304-543jeidi3vs9rankoebfiop6omh5s1ov.apps.googleusercontent.com"
-                data-login_uri="http://ec2-18-191-247-54.us-east-2.compute.amazonaws.com:3000/employee/?"
-                data-auto_prompt="false">
-            </div>
-            <div class="g_id_signin"
-                data-type="standard"
-                data-size="large"
-                data-theme="outline"
-                data-text="sign_in_with"
-                data-shape="rectangular"
-                data-logo_alignment="left">
-            </div>
-        </div> -->
+        
 
     </div>    
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
@@ -63,7 +43,6 @@
         <table class = "inProgressLog">
             <tr>
                 <th style="width:15%"> ID </th>
-                <!-- <th> Price </th> -->
                 <th> Ingredients </th>
                 <th style="width:15%"> Finished </th>
             </tr>
@@ -72,7 +51,6 @@
                 <% empty = false; %>
                 <tr>
                     <td><%= order.id%></td>
-                    <!-- <td><%= order.price%></td> -->
                     <td><%= order.ingredients%></td>
                     <td><form action="/employee/clear/<%= order.id%>" method="post">
                         <button type="submit" class="button">Clear</button>
