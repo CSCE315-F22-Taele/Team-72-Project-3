@@ -24,6 +24,13 @@ const getItems = async (req, res, next) => {
     next();
 }
 
+router.get('/auth', (req, res) => { 
+    res.redirect(
+        `https://github.com/login/oauth/authorize?client_id=4b5f36f104cbfefb755d`
+    );
+});
+
+
 // get request for customer page
 router.get('/', getItems, (req, res) => { 
     // group items by their respective categories

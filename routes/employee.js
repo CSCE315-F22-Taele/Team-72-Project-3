@@ -23,6 +23,15 @@ async function getInprogressOrders(req, res, next){
     next();
 }
 
+
+router.post('/auth', (req, res) => { 
+    res.redirect(
+        `https://github.com/login/oauth/authorize?client_id=4b5f36f104cbfefb755d`
+    );
+
+
+});
+
 router.get('/', getInprogressOrders, (req, res) => { 
     res.render("employee", {inprogressOrders: inprogressOrders});
 });
