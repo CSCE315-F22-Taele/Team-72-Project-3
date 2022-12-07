@@ -1,3 +1,8 @@
+/**
+ * Customer page scripts
+ * @author Carson Duffy
+ */
+
 var orderItems = [];
 var itemCount = 0;
 

@@ -15,9 +15,9 @@ var itemsByType = [];
 
 /**
  * Gets every item's information from the database
- * @param {*} req request object
- * @param {*} res response object
- * @param {*} next function to execute next middleware
+ * @param {Object} req request object
+ * @param {Object} res response object
+ * @param {function} next function to execute next middleware
  */
 const getItems = async (req, res, next) => {
     req.body.items = await execQuery("SELECT * FROM item");

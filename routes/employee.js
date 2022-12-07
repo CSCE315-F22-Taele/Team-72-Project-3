@@ -14,9 +14,9 @@ var inprogressOrders = [];
 router.use(getInprogressOrders)
 /**
  * Middleware which populates inProgressOrders array with all orders that have not been completed from the database
- * @param {*} req request object
- * @param {*} res response object
- * @param {*} next function to execute next middleware
+ * @param {Object} req request object
+ * @param {Object} res response object
+ * @param {function} next function to execute next middleware
  */
 async function getInprogressOrders(req, res, next){
     inprogressOrders = await execQuery("SELECT * FROM customer_orders_inprogress ORDER BY id DESC;");

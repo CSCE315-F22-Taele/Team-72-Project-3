@@ -1,3 +1,8 @@
+/**
+ * Manager page scripts
+ * @author Conrad Krueger
+ */
+
 const message = document.querySelector('#restock-amt');
 const result = document.querySelector('#restock-price');
 

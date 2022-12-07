@@ -20,9 +20,9 @@ router.use(getRecentRestock);
 
 /**
  * Middleware which populates recentRestock array with top 25 most recent Restock Orders
- * @param {*} req request object
- * @param {*} res response object
- * @param {*} next function to execute next middleware
+ * @param {Object} req request object
+ * @param {Object} res response object
+ * @param {function} next function to execute next middleware
  */
 async function getRecentRestock(req, res, next){
     recentRestock = await execQuery("SELECT * FROM restock_orders ORDER BY time_of_order DESC LIMIT 25;");
@@ -31,8 +31,8 @@ async function getRecentRestock(req, res, next){
 
 /**
  * Initial Display of the manager page (get/post request from user)
- * @param {*} req request object
- * @param {*} res response object
+ * @param {Object} req request object
+ * @param {Object} res response object
  */
 router.get('/', (req, res) => { 
     res.render("manager",  {excess:excess, sale:sale, restock:restock, recentRestock: recentRestock, btndisp: "block", disp: "none", restock_price: 0, restock_amount: 0, inventory: 0, order_unit: 'NULL' });
@@ -48,8 +48,8 @@ router.post('/1', (req, res) => {
 
 /**
  * Initial Display of the manager page (get/post request from user)
- * @param {*} req request object, contains item's name
- * @param {*} res response object
+ * @param {Object} req request object
+ * @param {Object} res response object
  */
 router.post('/', async (req, res) => { 
     info = await execQuery("SELECT name, restock_price, restock_amount, order_unit, inventory from item WHERE name ='"+req.body["item-name"]+"';");
@@ -72,8 +72,8 @@ router.post('/', async (req, res) => {
 
 /**
  * Updates Item's inventory and Order log
- * @param {*} req request object, contains item's restock amount
- * @param {*} res response object
+ * @param {Object} req request object, contains item's restock amount
+ * @param {Object} res response object
  */
 router.post('/0', async (req, res) => { 
     if (req.body["restock-amt"] !== ""){
@@ -101,8 +101,8 @@ router.post('/0', async (req, res) => {
 
 /**
  * Generates a restock report on the manager page
- * @param {*} req request object
- * @param {*} res response object
+ * @param {Object} req request object
+ * @param {Object} res response object
  */
 router.post('/restock', async (req, res) => { 
     let items = await execQuery("SELECT name, inventory, min_amount, order_unit FROM item"); 
@@ -120,8 +120,8 @@ router.post('/restock', async (req, res) => {
 
 /**
  * Clears restock report display on the manager page
- * @param {*} req request object
- * @param {*} res response object
+ * @param {Object} req request object
+ * @param {Object} res response object
  */
 router.post('/restock-clear', async (req, res) => { 
     restock = [];
@@ -131,8 +131,8 @@ router.post('/restock-clear', async (req, res) => {
 
 /**
  * Generates a sales report on the manager page
- * @param {*} req request object
- * @param {*} res response object
+ * @param {Object} req request object
+ * @param {Object} res response object
  */
 router.post('/sale', async (req, res) => { 
     ids = await execQuery("select id, name from item;");
@@ -166,8 +166,8 @@ router.post('/sale', async (req, res) => {
 
 /**
  * Clears sales report display on the manager page
- * @param {*} req request object
- * @param {*} res response object
+ * @param {Object} req request object
+ * @param {Object} res response object
  */
 router.post('/sale-clear', async (req, res) => { 
     sale = [];
@@ -179,8 +179,8 @@ router.post('/sale-clear', async (req, res) => {
 
 /**
  * Generates an excess report on the manager page
- * @param {*} req request object
- * @param {*} res response object
+ * @param {Object} req request object
+ * @param {Object} res response object
  */
 router.post('/excess', async (req, res) => { 
     item_info = await execQuery("select id, name, inventory, customer_amount from item;");
@@ -220,8 +220,8 @@ router.post('/excess', async (req, res) => {
 
 /**
  * Clears excess report display on the manager page
- * @param {*} req request object
- * @param {*} res response object
+ * @param {Object} req request object
+ * @param {Object} res response object
  */
 router.post('/excess-clear', async (req, res) => { 
     excess = [];
@@ -231,8 +231,8 @@ router.post('/excess-clear', async (req, res) => {
 
 /**
  * Adds a unique custom Item to the database
- * @param {*} req request object
- * @param {*} res response object
+ * @param {Object} req request object
+ * @param {Object} res response object
  */
 router.post('/addItem', async (req, res) => { 
         // console.log((await execQuery("SELECT COUNT(id) FROM item"))[0]);
